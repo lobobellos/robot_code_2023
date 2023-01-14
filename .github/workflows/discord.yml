@@ -13,4 +13,4 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'A new commit has been pushed to `main` branch of `${{github.repository}}` \n https://github.com/${{github.repository}}/commit/${{github.sha}}'
+        args: 'A new commit has been pushed to `main` branch of `${{github.repository}}` https://github.com/${{github.repository}}/commit/${{github.sha}}'
