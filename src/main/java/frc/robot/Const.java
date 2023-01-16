@@ -14,8 +14,22 @@ package frc.robot;
  */
 public final class Const {
   //drive motors
-  public final int fl=1;
-  public final int fr=2;
-  public final int rl=3;
-  public final int rr=4;
+  public static final int fl=1;
+  public static final int fr=2;
+  public static final int rl=3;
+  public static final int rr=4;
+
+  //claw arm
+  public static final int shoulderL = 5;
+  public static final int shoulderR = 6;
+  
+  public static final int elbow = 7;
+  public static final int wristRoll = 8;
+  public static final int wristPitch = 9;
+  
+  //10 is reserved to the PDP
+  
+  public static final int claw = 11;
+
+
 }
