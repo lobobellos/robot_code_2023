@@ -20,10 +20,26 @@ public final class Const {
   public static final int rr=4;
 
   //claw arm
-  public static final int shoulderL = 5;
-  public static final int shoulderR = 6;
+
+  public static final class Shoulder{
+    public static final int ID_L = 5;
+    public static final int ID_R = 6;
+
+    public static final int encoderA = 1;
+    public static final int encoderB = 2;
+    public static final boolean encoderReversed = false;
+    
+    public static final int kp = 0;
+    public static final int ki = 0;
+    public static final int kd = 0;
+    
+  }
+
+  public static final class Elbow{
+    public static final int ID = 7;
+
+  }
   
-  public static final int elbow = 7;
   public static final int wristRoll = 8;
   public static final int wristPitch = 9;
   
