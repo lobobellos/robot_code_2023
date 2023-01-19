@@ -30,15 +30,15 @@ public final class Const {
     public static final boolean encoderReversed = false;
     
     //pid
-    public static final int kP = 0;
-    public static final int kI = 0;
-    public static final int kD = 0;
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
 
     //feed fowrard control
-    public static final int kG = 0;
-    public static final int kV = 0;
+    public static final double kG = 0;
+    public static final double kV = 0;
 
-
+    public static final double tolerance = 0;
     
   }
 
