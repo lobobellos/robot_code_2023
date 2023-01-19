@@ -29,6 +29,7 @@ public class Shoulder extends PIDSubsystem{
     super(
       new PIDController(Const.Shoulder.kP, Const.Shoulder.kI, Const.Shoulder.kD)
     );
+    getController().setTolerance(Const.Shoulder.tolerance);
 
     shoulderR.setInverted(true);
     shoulder = new MotorControllerGroup(shoulderL, shoulderR);
@@ -47,4 +48,6 @@ public class Shoulder extends PIDSubsystem{
   public boolean atSetpoint() {
     return m_controller.atSetpoint();
   }  
+
+  
 }
