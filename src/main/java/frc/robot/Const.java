@@ -29,9 +29,16 @@ public final class Const {
     public static final int encoderB = 2;
     public static final boolean encoderReversed = false;
     
-    public static final int kp = 0;
-    public static final int ki = 0;
-    public static final int kd = 0;
+    //pid
+    public static final int kP = 0;
+    public static final int kI = 0;
+    public static final int kD = 0;
+
+    //feed fowrard control
+    public static final int kG = 0;
+    public static final int kV = 0;
+
+
     
   }
 

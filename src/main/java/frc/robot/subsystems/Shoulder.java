@@ -23,11 +23,11 @@ public class Shoulder extends PIDSubsystem{
     Const.Shoulder.encoderReversed
   );
 
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0);
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Const.Shoulder.kG, Const.Shoulder.kV);
   
   public Shoulder(){
     super(
-      new PIDController(Const.Shoulder.kp, Const.Shoulder.ki, Const.Shoulder.kd)
+      new PIDController(Const.Shoulder.kP, Const.Shoulder.kI, Const.Shoulder.kD)
     );
 
     shoulderR.setInverted(true);
