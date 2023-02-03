@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Shoulder shoulder = new Shoulder();
+  private final DriveBase db = new DriveBase();
+
+  private final CommandXboxController controller = new CommandXboxController(1);
   
   
   //wacey was here;
@@ -31,6 +36,14 @@ public class RobotContainer {
       new InstantCommand(()->{ System.out.println("bruh");},
       shoulder)
     );
+
+    db.setDefaultCommand(
+      new RunCommand(
+        ()->{db.drive(controller.getLeftX(),controller.getLeftY(),controller.getRightX());},
+        db
+      )
+    );
+
 
     // Configure the button bindings
     configureButtonBindings();
