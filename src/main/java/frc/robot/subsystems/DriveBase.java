@@ -24,13 +24,14 @@ public class DriveBase extends SubsystemBase{
 
     driveBase = new MecanumDrive(fl,fr,rl,rr);
 
+    addChild("driveBase",driveBase);
   }
 
-  void drive(double x,double y, double z){
+  public void drive(double x,double y, double z){
     driveBase.driveCartesian(x, y, z);
   }
 
-  void stop(){
+  public void stop(){
     driveBase.driveCartesian(0,0,0);
   }
 
