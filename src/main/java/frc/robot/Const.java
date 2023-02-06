@@ -59,5 +59,9 @@ public final class Const {
   
   public static final int claw = 11;
 
+  public static class pneumatics{
+    public static final int PCMID = 19;
+  }
+
 
 }
