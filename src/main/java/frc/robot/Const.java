@@ -67,7 +67,7 @@ public final class Const {
   public static class foot{
 
     public static class doubleSolenoid{
-      public static final int forwardChannel = 0;
+      public static final int forwardChannel = 1;
       public static final int backwardChannel = 0;
     }
   }
