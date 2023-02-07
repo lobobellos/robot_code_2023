@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.EngageFoot;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -56,7 +57,9 @@ public class RobotContainer {
 
     foot.setDefaultCommand(
       new RunCommand(
-        ()->foot.set(DoubleSolenoid.Value.kReverse),
+        ()->{
+          SmartDashboard.putString("pneumatics",foot.getStatus());
+        },
         foot
       )
     );
@@ -73,9 +76,22 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    controller.a().toggleOnTrue(engageFoot);
-
-
+    controller.a().onTrue(new InstantCommand(
+      ()->{
+        foot.set(DoubleSolenoid.Value.kForward);
+      },
+      foot
+    ));
+    
+    controller.b().onTrue(new InstantCommand(
+      ()->foot.set(DoubleSolenoid.Value.kReverse),
+      foot
+    ));
+    
+    controller.x().onTrue(new InstantCommand(
+      ()->foot.set(DoubleSolenoid.Value.kOff),
+      foot
+    ));
   }
 
   /**
