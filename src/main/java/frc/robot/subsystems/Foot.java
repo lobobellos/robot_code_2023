@@ -28,4 +28,8 @@ public class Foot extends SubsystemBase{
     mainSolenoid.set(val);
   }
 
+  public String getStatus(){
+    return mainSolenoid.get().name();
+  }
+
 }
