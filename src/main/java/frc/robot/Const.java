@@ -49,18 +49,27 @@ public final class Const {
 
   public static final class Elbow{
     public static final int ID = 7;
-
+    
   }
   
-  public static final int wristRoll = 8;
-  public static final int wristPitch = 9;
+  public static final class PDP{
+    public static final int ID = 10;
+  }
   
-  //10 is reserved to the PDP
-  
-  public static final int claw = 11;
+  public static final class claw{
+    public static final int ID = 11;
+  }
+
 
   public static class pneumatics{
     public static final int PCMID = 19;
+  }
+  public static class foot{
+
+    public static class doubleSolenoid{
+      public static final int forwardChannel = 0;
+      public static final int backwardChannel = 0;
+    }
   }
 
 
