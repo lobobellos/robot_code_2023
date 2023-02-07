@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shoulder;
 
-public class moveShoulderTo extends CommandBase{
+public class MoveShoulderTo extends CommandBase{
 
   Shoulder shoulder;
 
-  public moveShoulderTo(Shoulder shoulder,double setpoint){
+  public MoveShoulderTo(Shoulder shoulder,double setpoint){
 
     shoulder.setSetpoint(setpoint);
     addRequirements(shoulder);
