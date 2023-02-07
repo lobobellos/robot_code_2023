@@ -23,6 +23,7 @@ public class RobotContainer {
   //private final Shoulder shoulder = new Shoulder();
   //private final DriveBase db = new DriveBase();
   private final Pneumatics pneumatics = new Pneumatics();
+  //private final Foot foot = new Foot(pneumatics);
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
@@ -32,9 +33,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     /* 
-    shoulder.runOnce(
-      ()->{System.out.println("bruh");}
-    );
 
     db.setDefaultCommand(
       new RunCommand(
