@@ -20,4 +20,12 @@ public class Foot extends SubsystemBase{
     );
   }
 
+  public void stop(){
+    mainSolenoid.set(DoubleSolenoid.Value.kOff);
+  }
+
+  public void set(DoubleSolenoid.Value val){
+    mainSolenoid.set(val);
+  }
+
 }
