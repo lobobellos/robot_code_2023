@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-
+import frc.robot.commands.EngageFoot;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
@@ -23,17 +25,19 @@ public class RobotContainer {
   //private final Shoulder shoulder = new Shoulder();
   //private final DriveBase db = new DriveBase();
   private final Pneumatics pneumatics = new Pneumatics();
-  //private final Foot foot = new Foot(pneumatics);
+  private final Foot foot = new Foot(pneumatics);
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
+
+  private final EngageFoot engageFoot = new EngageFoot(foot);
   
   //wacey was here;
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    /* 
 
+    /* 
     db.setDefaultCommand(
       new RunCommand(
         ()->{db.drive(controller.getLeftX(),controller.getLeftY(),controller.getRightX());},
@@ -50,6 +54,12 @@ public class RobotContainer {
         }
     );
 
+    foot.setDefaultCommand(
+      new RunCommand(
+        ()->foot.set(DoubleSolenoid.Value.kReverse),
+        foot
+      )
+    );
 
     // Configure the button bindings
     configureButtonBindings();
@@ -61,7 +71,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+    controller.a().toggleOnTrue(engageFoot);
+
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
