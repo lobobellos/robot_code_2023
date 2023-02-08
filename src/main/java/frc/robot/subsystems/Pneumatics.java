@@ -26,6 +26,15 @@ public class Pneumatics extends SubsystemBase{
     comp.disable();
   }
 
+  public void toggleDisabled(){
+    if(comp.isEnabled()){
+      comp.disable();
+    }else{
+      comp.enableDigital(); 
+    } ;
+    
+  }
+
   public PneumaticsControlModule getPCM(){
     return pcm;
   }

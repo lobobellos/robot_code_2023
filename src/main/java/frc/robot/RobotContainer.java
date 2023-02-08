@@ -24,28 +24,29 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final Shoulder shoulder = new Shoulder();
-  //private final DriveBase db = new DriveBase();
+private final DriveBase db = new DriveBase();
   private final Pneumatics pneumatics = new Pneumatics();
   private final Foot foot = new Foot(pneumatics);
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
-
-  private final EngageFoot engageFoot = new EngageFoot(foot);
   
   //wacey was here;
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    /* 
+    
     db.setDefaultCommand(
       new RunCommand(
-        ()->{db.drive(controller.getLeftX(),controller.getLeftY(),controller.getRightX());},
+        ()->{
+          db.drive(controller.getLeftY(),controller.getLeftX(),controller.getRightX());
+          SmartDashboard.putBoolean("isDriveing", true);
+        },
         db
       )
     );
-    */
+    
 
     pneumatics.runOnce(
 
@@ -91,6 +92,11 @@ public class RobotContainer {
     controller.x().onTrue(new InstantCommand(
       ()->foot.set(DoubleSolenoid.Value.kOff),
       foot
+    ));
+
+    controller.y().onTrue(new InstantCommand(
+      ()->pneumatics.toggleDisabled(),
+      pneumatics
     ));
   }
 
