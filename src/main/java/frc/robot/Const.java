@@ -16,10 +16,10 @@ public final class Const {
   //drive motors
   
   public static final class drive{
-    public static final int fl=1;
-    public static final int fr=2;
-    public static final int rl=3;
-    public static final int rr=4;
+    public static final int fl=4;
+    public static final int fr=1;
+    public static final int rl=2;
+    public static final int rr=3;
   }
   
   public static final int michaelsAge = 4;
