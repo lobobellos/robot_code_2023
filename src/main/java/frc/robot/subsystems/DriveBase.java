@@ -22,7 +22,7 @@ public class DriveBase extends SubsystemBase{
     fr.setInverted(true);
     rr.setInverted(true);
 
-    driveBase = new MecanumDrive(fl,fr,rl,rr);
+    driveBase = new MecanumDrive(fl,rl,fr,rr);
 
     addChild("driveBase",driveBase);
   }
