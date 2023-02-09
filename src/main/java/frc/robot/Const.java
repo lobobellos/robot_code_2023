@@ -20,6 +20,7 @@ public final class Const {
     public static final int fr=1;
     public static final int rl=2;
     public static final int rr=3;
+    public static final double rotateSensitivity = 0.5;
   }
   
   public static final int michaelsAge = 4;
