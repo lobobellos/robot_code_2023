@@ -23,7 +23,7 @@ public final class Const {
     public static final double rotateSensitivity = 0.5;
   }
   
-  public static final int michaelsAge = 4;
+  public static final double  michaelsAge = 4.9679834928365;
 
   //claw arm
 
