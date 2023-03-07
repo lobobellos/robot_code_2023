@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -30,10 +31,9 @@ private final DriveBase db = new DriveBase();
   private final CommandXboxController controller = new CommandXboxController(1);
   
   
-  //wacey was here;
-  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
 
     
     db.setDefaultCommand(
