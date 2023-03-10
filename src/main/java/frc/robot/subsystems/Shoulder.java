@@ -1,11 +1,11 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Const;
@@ -17,11 +17,10 @@ public class Shoulder extends PIDSubsystem{
   CANSparkMax shoulderR = new CANSparkMax(Const.Shoulder.ID_R, MotorType.kBrushless);
   MotorControllerGroup shoulder;
 
-  Encoder encoder = new Encoder(
-    Const.Shoulder.encoderA,
-    Const.Shoulder.encoderB,
-    Const.Shoulder.encoderReversed
-  );
+  RelativeEncoder[] encoders = {
+    shoulderL.getEncoder(),
+    shoulderR.getEncoder()
+  };
 
   SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Const.Shoulder.kG, Const.Shoulder.kV);
   
@@ -42,7 +41,7 @@ public class Shoulder extends PIDSubsystem{
 
   @Override
   public double getMeasurement() {
-    return encoder.getRate();
+    return encoders[0].getPosition();
   }
 
   public boolean atSetpoint() {
