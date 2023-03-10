@@ -28,12 +28,10 @@ public final class Const {
   //claw arm
 
   public static final class Shoulder{
-    public static final int ID_L = 5;
+    public static final int ID_L = 8;
     public static final int ID_R = 6;
 
-    public static final int encoderA = 1;
-    public static final int encoderB = 2;
-    public static final boolean encoderReversed = false;
+
     
     //pid
     public static final double kP = 0;
