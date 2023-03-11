@@ -40,6 +40,8 @@ public final class Const {
     public static final double kV = 0;
 
     public static final double tolerance = 0;
+
+    public static final double speedRatio = 0.1;
     
   }
 
