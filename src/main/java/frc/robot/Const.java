@@ -27,12 +27,9 @@ public final class Const {
 
   //claw arm
 
-  public static final class Shoulder{
-    public static final int ID_L = 8;
-    public static final int ID_R = 6;
+  public static final class shoulder{
+    public static final int[] ids = {5,6,7,8};
 
-
-    
     //pid
     public static final double kP = 0;
     public static final double kI = 0;

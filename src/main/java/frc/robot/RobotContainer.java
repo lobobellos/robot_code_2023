@@ -27,6 +27,7 @@ public class RobotContainer {
 private final DriveBase db = new DriveBase();
   private final Pneumatics pneumatics = new Pneumatics();
   private final Foot foot = new Foot(pneumatics);
+  final Shoulder shoulder= new Shoulder();
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
@@ -61,6 +62,13 @@ private final DriveBase db = new DriveBase();
           SmartDashboard.putString("pneumatics",foot.getStatus());
         },
         foot
+      )
+    );
+
+    shoulder.setDefaultCommand(
+      new RunCommand(
+        ()->shoulder.set(controller.getLeftTriggerAxis()),
+        shoulder  
       )
     );
 

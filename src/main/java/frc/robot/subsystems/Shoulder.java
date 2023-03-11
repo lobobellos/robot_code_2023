@@ -11,27 +11,35 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Const;
 
 public class Shoulder extends PIDSubsystem{
-
+  
   //shoulder motors
-  CANSparkMax shoulderL = new CANSparkMax(Const.Shoulder.ID_L, MotorType.kBrushless);
-  CANSparkMax shoulderR = new CANSparkMax(Const.Shoulder.ID_R, MotorType.kBrushless);
-  MotorControllerGroup shoulder;
-
-  RelativeEncoder[] encoders = {
-    shoulderL.getEncoder(),
-    shoulderR.getEncoder()
+  CANSparkMax[] sparkMaxes = {
+    new CANSparkMax(Const.shoulder.ids[0], MotorType.kBrushless),
+    new CANSparkMax(Const.shoulder.ids[1], MotorType.kBrushless),
+    new CANSparkMax(Const.shoulder.ids[2], MotorType.kBrushless),
+    new CANSparkMax(Const.shoulder.ids[3], MotorType.kBrushless)
   };
 
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Const.Shoulder.kG, Const.Shoulder.kV);
+  //encoders
+  RelativeEncoder[] encoders = {
+    sparkMaxes[0].getEncoder(),
+    sparkMaxes[1].getEncoder(),
+    sparkMaxes[2].getEncoder(),
+    sparkMaxes[3].getEncoder()
+  };
+
+  //motor group
+  MotorControllerGroup shoulder = new MotorControllerGroup(sparkMaxes);
+
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Const.shoulder.kG, Const.shoulder.kV);
   
   public Shoulder(){
     super(
-      new PIDController(Const.Shoulder.kP, Const.Shoulder.kI, Const.Shoulder.kD)
+      new PIDController(Const.shoulder.kP, Const.shoulder.kI, Const.shoulder.kD)
     );
-    getController().setTolerance(Const.Shoulder.tolerance);
+    getController().setTolerance(Const.shoulder.tolerance);
 
-    shoulderR.setInverted(true);
-    shoulder = new MotorControllerGroup(shoulderL, shoulderR);
+
   }
 
   @Override
@@ -48,5 +56,8 @@ public class Shoulder extends PIDSubsystem{
     return m_controller.atSetpoint();
   }  
 
+  public void set(double speed){
+    shoulder.set(speed);
+  }
   
 }
