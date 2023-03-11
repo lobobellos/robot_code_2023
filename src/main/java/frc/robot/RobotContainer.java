@@ -67,7 +67,7 @@ private final DriveBase db = new DriveBase();
 
     shoulder.setDefaultCommand(
       new RunCommand(
-        ()->shoulder.set(controller.getLeftTriggerAxis()),
+        ()->shoulder.set(controller.getLeftTriggerAxis()/10),
         shoulder  
       )
     );
