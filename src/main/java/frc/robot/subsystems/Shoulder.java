@@ -3,15 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
-public class Shoulder extends PIDSubsystem{
+public class Shoulder extends SubsystemBase{
   
+  CANSparkMax
+
   //shoulder motors
   CANSparkMax[] sparkMaxes = {
     new CANSparkMax(Const.shoulder.ids[0], MotorType.kBrushless),
@@ -33,31 +34,26 @@ public class Shoulder extends PIDSubsystem{
 
   SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Const.shoulder.kG, Const.shoulder.kV);
   
+  
+
   public Shoulder(){
-    super(
-      new PIDController(Const.shoulder.kP, Const.shoulder.kI, Const.shoulder.kD)
-    );
-    getController().setTolerance(Const.shoulder.tolerance);
-
-
+    for(RelativeEncoder e : encoders){
+      e.setPosition(0);
+    }
   }
-
-  @Override
-  public void useOutput(double output, double setpoint) {
-    shoulder.setVoltage(output + feedforward.calculate(setpoint));
-  }
-
-  @Override
-  public double getMeasurement() {
-    return encoders[0].getPosition();
-  }
-
-  public boolean atSetpoint() {
-    return m_controller.atSetpoint();
-  }  
 
   public void set(double speed){
     shoulder.set(speed);
   }
-  
+
+  public void periodic(){
+
+    double[] encoderPos = new double[4];
+
+    for(int i=0;i<4;i++){
+      encoderPos[i] = encoders[i].getPosition();
+    }
+
+    SmartDashboard.putNumberArray("encoders", encoderPos);
+  }
 }

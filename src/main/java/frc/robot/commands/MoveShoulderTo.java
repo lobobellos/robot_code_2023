@@ -9,15 +9,10 @@ public class MoveShoulderTo extends CommandBase{
 
   public MoveShoulderTo(Shoulder shoulder,double setpoint){
 
-    shoulder.setSetpoint(setpoint);
+
     addRequirements(shoulder);
-    shoulder.getController().enableContinuousInput(-180, 180);
-    
-    this.shoulder = shoulder;
+
   }
 
-  @Override
-  public boolean isFinished(){
-    return shoulder.atSetpoint();
-  }
+
 }

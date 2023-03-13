@@ -28,7 +28,11 @@ public final class Const {
   //claw arm
 
   public static final class shoulder{
-    public static final int[] ids = {5,6,7,8};
+    public static final class ids{
+      public static final int rl = 7;
+      public static final int fl = 7;
+      
+    }
 
     //pid
     public static final double kP = 0;
@@ -41,7 +45,7 @@ public final class Const {
 
     public static final double tolerance = 0;
 
-    public static final double speedRatio = 0.1;
+    public static final double speedRatio = 0.5;
     
   }
 
