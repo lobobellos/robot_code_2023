@@ -53,6 +53,8 @@ public class Shoulder extends SubsystemBase{
     for(RelativeEncoder e : encoders){
       e.setPosition(0);
     }
+
+    shoulder.setInverted(true);
   }
 
   public void set(double speed){
