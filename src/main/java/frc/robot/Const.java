@@ -30,7 +30,9 @@ public final class Const {
   public static final class shoulder{
     public static final class ids{
       public static final int rl = 7;
-      public static final int fl = 7;
+      public static final int fl = 8;
+      public static final int fr = 5;
+      public static final int rr = 6;
       
     }
 
