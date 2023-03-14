@@ -63,6 +63,7 @@ public final class Const {
   
   public static final class claw{
     public static final int ID = 11;
+    public static final double speed = 0.9;
   }
 
 
