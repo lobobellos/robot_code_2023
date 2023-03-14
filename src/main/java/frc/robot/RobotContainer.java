@@ -25,9 +25,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final Shoulder shoulder = new Shoulder();
 private final DriveBase db = new DriveBase();
-  private final Pneumatics pneumatics = new Pneumatics();
-  private final Foot foot = new Foot(pneumatics);
+  final Pneumatics pneumatics = new Pneumatics();
+  final Foot foot = new Foot(pneumatics);
   final Shoulder shoulder= new Shoulder();
+  final Gyro gyro = new Gyro();
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
@@ -36,38 +37,22 @@ private final DriveBase db = new DriveBase();
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
 
-    
     db.setDefaultCommand(
       new RunCommand(
         ()->{
           db.drive(controller.getLeftY(),controller.getLeftX(),controller.getRightX());
-          SmartDashboard.putBoolean("isDriveing", true);
+          SmartDashboard.putBoolean("isDriving", true);
         },
         db
       )
     );
     
 
-    pneumatics.runOnce(
-
-        ()->{
-          System.out.println("pneumatics added to container");
-          
-        }
-    );
-
-    foot.setDefaultCommand(
-      new RunCommand(
-        ()->{
-          SmartDashboard.putString("pneumatics",foot.getStatus());
-        },
-        foot
-      )
-    );
-
     shoulder.setDefaultCommand(
       new RunCommand(
-        ()->shoulder.set(controller.getLeftTriggerAxis()*Const.shoulder.speedRatio),
+        ()->shoulder.set(
+          (controller.getLeftTriggerAxis()-controller.getRightTriggerAxis())*
+          Const.shoulder.speedRatio),
         shoulder  
       )
     );

@@ -14,8 +14,9 @@ public class Pneumatics extends SubsystemBase{
 
   public Pneumatics(){
     comp = pcm.makeCompressor();
-
     comp.enableDigital();
+
+    System.out.println("pneumatics added to container");
   }
 
   public void enable(){
