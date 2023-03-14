@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.MoveHand;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -29,6 +30,7 @@ private final DriveBase db = new DriveBase();
   final Foot foot = new Foot(pneumatics);
   final Shoulder shoulder= new Shoulder();
   final Gyro gyro = new Gyro();
+  final Claw claw = new Claw();
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
@@ -76,20 +78,34 @@ private final DriveBase db = new DriveBase();
       foot
     ));
     
-    controller.b().onTrue(new InstantCommand(
+    controller.b()
+    .onTrue(new InstantCommand(
       ()->foot.set(DoubleSolenoid.Value.kReverse),
       foot
     ));
     
-    controller.x().onTrue(new InstantCommand(
+    controller.x()
+    .onTrue(new InstantCommand(
       ()->foot.set(DoubleSolenoid.Value.kOff),
       foot
     ));
 
-    controller.y().onTrue(new InstantCommand(
+    controller.y()
+    .onTrue(new InstantCommand(
       ()->pneumatics.toggleDisabled(),
       pneumatics
     ));
+
+    controller.leftBumper()
+    .whileTrue(
+      new MoveHand(claw, false)
+    );
+
+    controller.rightBumper()
+    .whileTrue(
+      new MoveHand(claw, true)
+    );
+    
   }
 
   /**
