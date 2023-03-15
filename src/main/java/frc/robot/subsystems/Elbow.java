@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
   
-  private WPI_VictorSPX motor = new WPI_VictorSPX(Const.Elbow.motorID);
-  private Servo servo = new Servo(Const.Elbow.servoID);
-  private DutyCycleEncoder encoder = new DutyCycleEncoder(Const.Elbow.encoderDIOpin);
+  private WPI_VictorSPX motor = new WPI_VictorSPX(Const.elbow.motorID);
+  private Servo servo = new Servo(Const.elbow.servoID);
+  private DutyCycleEncoder encoder = new DutyCycleEncoder(Const.elbow.encoderDIOpin);
   
   public Elbow(){
     // TODO: initialization?
