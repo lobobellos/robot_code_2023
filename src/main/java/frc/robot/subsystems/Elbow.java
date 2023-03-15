@@ -35,7 +35,7 @@ public class Elbow extends SubsystemBase{
   public void periodic(){
     //put values on smartDashboard
     SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
-    SmartDashboard.putNumber("Elbow encoder ", encoder.get());
+    SmartDashboard.putNumber("Elbow encoder ", encoder.getDistance());
   }
 
   public Encoder getEncoder(){
