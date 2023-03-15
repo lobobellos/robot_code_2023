@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.MoveHand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
@@ -29,6 +27,7 @@ private final DriveBase db = new DriveBase();
   final Pneumatics pneumatics = new Pneumatics();
   final Foot foot = new Foot(pneumatics);
   final Shoulder shoulder= new Shoulder();
+  final Elbow elbow = new Elbow();
   final Gyro gyro = new Gyro();
   final Claw claw = new Claw();
 
@@ -105,7 +104,11 @@ private final DriveBase db = new DriveBase();
     .whileTrue(
       new MoveHand(claw, true)
     );
-    
+
+    controller.start()
+    .onTrue(
+      new ResetEncoders(shoulder, elbow, claw)
+    );
   }
 
   /**
