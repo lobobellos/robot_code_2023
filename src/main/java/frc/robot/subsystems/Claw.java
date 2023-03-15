@@ -34,4 +34,8 @@ public class Claw extends SubsystemBase{
     clawMotor.stopMotor();
   }
 
+  public Encoder getEncoder(){
+    return encoder;
+  }
+
 }

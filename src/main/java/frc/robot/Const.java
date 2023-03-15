@@ -54,7 +54,10 @@ public final class Const {
   public static final class elbow{
     public static final int motorID = 9;
     public static final int servoID = 0;
-    public static final int encoderDIOpin = 0;
+    public static final class encoder{
+      public static final int pinA = 2;
+      public static final int pinB = 3;
+    }
   }
   
   public static final class PDP{

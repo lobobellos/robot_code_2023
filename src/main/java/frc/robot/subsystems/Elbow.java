@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
@@ -11,7 +11,11 @@ public class Elbow extends SubsystemBase{
   
   private WPI_VictorSPX motor = new WPI_VictorSPX(Const.elbow.motorID);
   private Servo servo = new Servo(Const.elbow.servoID);
-  private DutyCycleEncoder encoder = new DutyCycleEncoder(Const.elbow.encoderDIOpin);
+
+  private Encoder encoder = new Encoder(
+    Const.elbow.encoder.pinA,
+    Const.elbow.encoder.pinB
+  );
   
   public Elbow(){
     // TODO: initialization?
@@ -32,6 +36,10 @@ public class Elbow extends SubsystemBase{
     //put values on smartDashboard
     SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.get());
+  }
+
+  public Encoder getEncoder(){
+    return encoder;
   }
 
 }

@@ -57,4 +57,8 @@ public class Shoulder extends SubsystemBase{
   public void periodic(){
     SmartDashboard.putNumber("shoulder encoder ", encoder.getPosition());
   }
+
+  public RelativeEncoder getEncoder() {
+    return encoder;
+  }
 }
