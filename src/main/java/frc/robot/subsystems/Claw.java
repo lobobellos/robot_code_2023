@@ -23,7 +23,7 @@ public class Claw extends SubsystemBase{
   }
 
   public void periodic(){
-    SmartDashboard.putNumber("encoder position", encoder.getDistance());
+    SmartDashboard.putNumber("claw encoder", encoder.getDistance());
   }
 
   public void set(double speed){
