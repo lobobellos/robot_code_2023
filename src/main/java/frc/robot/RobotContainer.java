@@ -33,6 +33,7 @@ private final DriveBase db = new DriveBase();
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
+  double shouderSetpoint = -1;
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -50,12 +51,7 @@ private final DriveBase db = new DriveBase();
     
 
     shoulder.setDefaultCommand(
-      new RunCommand(
-        ()->shoulder.set(
-          (controller.getLeftTriggerAxis()-controller.getRightTriggerAxis())*
-          Const.shoulder.speedRatio),
-        shoulder  
-      )
+      new MoveShoulderTo(shoulder,()->shouderSetpoint )
     );
 
     // Configure the button bindings
@@ -109,6 +105,26 @@ private final DriveBase db = new DriveBase();
     .onTrue(
       new ResetEncoders(shoulder, elbow, claw)
     );
+    
+    controller.povUp()
+    .onTrue(new InstantCommand(
+      ()->{
+        shouderSetpoint -= 1;
+        if(shouderSetpoint == -5){ 
+          shouderSetpoint = -4;
+        }
+      }
+    ));
+
+    controller.povDown()
+    .onTrue(new InstantCommand(
+      ()->{
+        shouderSetpoint += 1;
+        if(shouderSetpoint == 0){ 
+          shouderSetpoint = -1;
+        }
+      }
+    ));
   }
 
   /**

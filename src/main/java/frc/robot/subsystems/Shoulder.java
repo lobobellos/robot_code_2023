@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -50,8 +52,17 @@ public class Shoulder extends SubsystemBase{
     shoulder.setInverted(true);
   }
 
+  public SparkMaxPIDController getPIDController(){
+    return shoulder.getPIDController();
+  }
+
+
   public void set(double speed){
     shoulder.set(speed);
+  }
+
+  public void setSetPoint(double setpoint){
+    shoulder.getPIDController().setReference(setpoint, ControlType.kPosition);
   }
 
   public void periodic(){
