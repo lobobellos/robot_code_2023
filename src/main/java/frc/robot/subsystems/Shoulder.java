@@ -5,8 +5,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
@@ -41,16 +39,6 @@ public class Shoulder extends SubsystemBase{
       Const.shoulder.pidff.minOutput,
       Const.shoulder.pidff.maxOutput
     );
-
-  }
-
-  public SparkMaxPIDController getPIDController(){
-    return controller;
-  }
-
-
-  public void set(double speed){
-    shoulder.set(speed);
   }
 
   public void setSetPoint(double setpoint){
