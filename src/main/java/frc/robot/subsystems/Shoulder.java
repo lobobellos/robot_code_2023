@@ -12,13 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
 public class Shoulder extends SubsystemBase{
-  
-  /*
-   * 0 - fl
-   * 1 - rl
-   * 2 - fr
-   * 3 - rr
-   */
+
   CANSparkMax shoulder = new CANSparkMax(Const.shoulder.ids.fl, MotorType.kBrushless);
 
   CANSparkMax[] controllers = {
@@ -27,33 +21,31 @@ public class Shoulder extends SubsystemBase{
     new CANSparkMax(Const.shoulder.ids.rr, MotorType.kBrushless)
   };
 
-  //encoders
+  //encoder
   RelativeEncoder encoder = shoulder.getEncoder();
-
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
-    Const.shoulder.kG,
-    Const.shoulder.kV
-  );
-  
-  PIDController controller = new PIDController(
-    Const.shoulder.kP,
-    Const.shoulder.kI, 
-    Const.shoulder.kD
-  );
+  SparkMaxPIDController controller = shoulder.getPIDController();
 
   public Shoulder(){
 
     encoder.setPosition(0);
-
-    for(CANSparkMax s : controllers){
-      s.follow(shoulder);
-    }
-
+    for(CANSparkMax s : controllers){s.follow(shoulder);}
     shoulder.setInverted(true);
+
+    // set PID coefficients
+    controller.setP(Const.shoulder.pidff.kP);
+    controller.setI(Const.shoulder.pidff.kI);
+    controller.setD(Const.shoulder.pidff.kD);
+    controller.setIZone(Const.shoulder.pidff.kIz);
+    controller.setFF(Const.shoulder.pidff.kFF);
+    controller.setOutputRange(
+      Const.shoulder.pidff.minOutput,
+      Const.shoulder.pidff.maxOutput
+    );
+
   }
 
   public SparkMaxPIDController getPIDController(){
-    return shoulder.getPIDController();
+    return controller;
   }
 
 
