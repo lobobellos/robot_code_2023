@@ -36,14 +36,20 @@ public final class Const {
       
     }
 
-    //pid
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-
-    //feed fowrard control
-    public static final double kG = 0;
-    public static final double kV = 0;
+    //pid+ff
+    public static final class pidff{
+      //pid
+      public static final double kP = 0.1;
+      public static final double kI = 1e-4;
+      public static final double kD = 1;
+      // I-zone
+      public static final double kIz = 1;
+      //feed forward control
+      public static final double kFF = 0;
+      //output clamps
+      public static final double minOutput = -1;
+      public static final double maxOutput = 1;
+    }
 
     public static final double tolerance = 0;
 
