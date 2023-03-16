@@ -48,15 +48,9 @@ public class MoveShoulderTo extends CommandBase{
   }
   
   public void execute(){
-
     controller.setReference(setpoint.getAsDouble(), CANSparkMax.ControlType.kPosition);
     
     SmartDashboard.putNumber("SetPoint", setpoint.getAsDouble());
     SmartDashboard.putNumber("ProcessVariable", shoulder.getEncoder().getPosition());
   }
-
-  public boolean isFinished(){
-    return false;
-  }
-
 }
