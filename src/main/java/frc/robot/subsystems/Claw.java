@@ -58,9 +58,7 @@ public class Claw extends SubsystemBase{
     this.setpoint =  setpoint;
   }
 
-  public void stop(){
-    clawMotor.stopMotor();
-  }
+
 
   public Encoder getEncoder(){
     return encoder;
