@@ -75,15 +75,15 @@ public final class Const {
     public static final double speed = 0.9;
 
     public static final double startPoint = 0;
-    public static final double endPoint = 0;
+    public static final double endPoint = 2100;
 
 
     //pid+ff
     public static final class pidff {
       //pid
-      public static final double kP = 0.1;
-      public static final double kI = 1e-4;
-      public static final double kD = 1;
+      public static final double kP = 0.005;
+      public static final double kI = 0;
+      public static final double kD = 0.0005;
       // I-zone
       public static final double kIz = 1;
       //feed forward control
