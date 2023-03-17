@@ -37,7 +37,7 @@ public final class Const {
     }
 
     //pid+ff
-    public static final class pidff{
+    public static final class pidff {
       //pid
       public static final double kP = 0.1;
       public static final double kI = 1e-4;
@@ -73,8 +73,27 @@ public final class Const {
   public static final class claw{
     public static final int ID = 11;
     public static final double speed = 0.9;
-  }
 
+    public static final double startPoint = 0;
+    public static final double endPoint = 0;
+
+
+    //pid+ff
+    public static final class pidff {
+      //pid
+      public static final double kP = 0.1;
+      public static final double kI = 1e-4;
+      public static final double kD = 1;
+      // I-zone
+      public static final double kIz = 1;
+      //feed forward control
+      public static final double kS = 0;
+      public static final double kV = 0;
+      //output clamps
+      public static final double minOutput = -1;
+      public static final double maxOutput = 1;
+    }
+  }
 
   public static class pneumatics{
     public static final int PCMID = 19;
@@ -86,6 +105,5 @@ public final class Const {
       public static final int backwardChannel = 0;
     }
   }
-
 
 }
