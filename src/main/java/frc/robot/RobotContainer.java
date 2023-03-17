@@ -93,12 +93,12 @@ private final DriveBase db = new DriveBase();
 
     controller.leftBumper()
     .whileTrue(
-      new MoveHand(claw, false)
+      new MoveHand(claw, MoveHand.position.closed)
     );
 
     controller.rightBumper()
     .whileTrue(
-      new MoveHand(claw, true)
+      new MoveHand(claw, MoveHand.position.open)
     );
 
     controller.start()
