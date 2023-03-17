@@ -6,6 +6,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
@@ -22,6 +23,8 @@ public class Shoulder extends SubsystemBase{
   //encoder
   RelativeEncoder encoder = shoulder.getEncoder();
   SparkMaxPIDController controller = shoulder.getPIDController();
+
+  double setpoint = 0;
 
   public Shoulder(){
 
@@ -42,7 +45,12 @@ public class Shoulder extends SubsystemBase{
   }
 
   public void setSetPoint(double setpoint){
-    shoulder.getPIDController().setReference(setpoint, ControlType.kPosition);
+    controller.setReference(setpoint, ControlType.kPosition);
+    this.setpoint = setpoint;
+  }
+
+  public double getSetPoint(){
+    return setpoint;
   }
 
   public void periodic(){
@@ -53,4 +61,17 @@ public class Shoulder extends SubsystemBase{
   public RelativeEncoder getEncoder() {
     return encoder;
   }
+
+  public InstantCommand moveUp(){
+    return new InstantCommand(
+      ()->setpoint = setpoint == -4 ? setpoint : setpoint-1
+    );
+  }
+  
+  public InstantCommand moveDown(){
+    return new InstantCommand(
+      ()->setpoint = setpoint == -1 ? setpoint : setpoint+1
+    );
+  }
+
 }

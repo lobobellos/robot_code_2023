@@ -60,9 +60,21 @@ public final class Const {
   public static final class elbow{
     public static final int motorID = 9;
     public static final int servoID = 0;
-    public static final class encoder{
-      public static final int pinA = 2;
-      public static final int pinB = 3;
+
+    //pid+ff
+    public static final class pidff {
+      //pid
+      public static final double kP = 0.005;
+      public static final double kI = 0;
+      public static final double kD = 0.0005;
+      // I-zone
+      public static final double kIz = 1;
+      //feed forward control
+      public static final double kS = 0;
+      public static final double kV = 0;
+      //output clamps
+      public static final double minOutput = -1;
+      public static final double maxOutput = 1;
     }
   }
   

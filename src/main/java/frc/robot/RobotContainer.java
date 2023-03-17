@@ -33,7 +33,6 @@ private final DriveBase db = new DriveBase();
 
   private final CommandXboxController controller = new CommandXboxController(1);
   
-  double shouderSetpoint = -1;
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,10 +48,6 @@ private final DriveBase db = new DriveBase();
       )
     );
     
-
-    shoulder.setDefaultCommand(
-      new MoveShoulderTo(shoulder,()->shouderSetpoint )
-    );
 
     // Configure the button bindings
     configureButtonBindings();
@@ -107,24 +102,10 @@ private final DriveBase db = new DriveBase();
     );
     
     controller.povUp()
-    .onTrue(new InstantCommand(
-      ()->{
-        shouderSetpoint -= 1;
-        if(shouderSetpoint == -5){ 
-          shouderSetpoint = -4;
-        }
-      }
-    ));
+    .onTrue(shoulder.moveUp());
 
     controller.povDown()
-    .onTrue(new InstantCommand(
-      ()->{
-        shouderSetpoint += 1;
-        if(shouderSetpoint == 0){ 
-          shouderSetpoint = -1;
-        }
-      }
-    ));
+    .onTrue(shoulder.moveDown());
   }
 
   /**
