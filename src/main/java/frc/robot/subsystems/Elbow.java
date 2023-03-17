@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.Encoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
@@ -9,16 +11,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
   
-  private WPI_VictorSPX motor = new WPI_VictorSPX(Const.elbow.motorID);
-  private Servo servo = new Servo(Const.elbow.servoID);
+  CANSparkMax motor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
 
-  private Encoder encoder = new Encoder(
-    Const.elbow.encoder.pinA,
-    Const.elbow.encoder.pinB
-  );
+  Servo servo = new Servo(Const.elbow.servoID);
+
+  SparkMaxPIDController controller = motor.getPIDController();
+
+  RelativeEncoder encoder = motor.getEncoder();
   
   public Elbow(){
     // TODO: initialization?
+
+    
   }
 
   //create method to set the motorcontroller
@@ -35,10 +39,10 @@ public class Elbow extends SubsystemBase{
   public void periodic(){
     //put values on smartDashboard
     SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
-    SmartDashboard.putNumber("Elbow encoder ", encoder.getDistance());
+    SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
   }
 
-  public Encoder getEncoder(){
+  public RelativeEncoder getEncoder(){
     return encoder;
   }
 
