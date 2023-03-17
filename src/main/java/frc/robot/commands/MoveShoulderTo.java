@@ -14,7 +14,8 @@ public class MoveShoulderTo extends RunCommand{
         shoulder.setSetPoint(setpoint.getAsDouble());
         SmartDashboard.putNumber("SetPoint", setpoint.getAsDouble());
         SmartDashboard.putNumber("ProcessVariable", shoulder.getEncoder().getPosition());
-      }
+      },
+      shoulder
     );
   }
 }
