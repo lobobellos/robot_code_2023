@@ -10,7 +10,7 @@ public class ResetEncoders extends InstantCommand{
     super(
       ()->{
         shoulder.getEncoder().setPosition(0);
-        elbow.getEncoder().reset();
+        elbow.getEncoder().setPosition(0);
         claw.getEncoder().reset();
       },
       shoulder,elbow,claw);
