@@ -47,6 +47,7 @@ public class Shoulder extends SubsystemBase{
 
   public void periodic(){
     SmartDashboard.putNumber("shoulder encoder ", encoder.getPosition());
+    SmartDashboard.putNumber("ProcessVariable", shoulder.getEncoder().getPosition());
   }
 
   public RelativeEncoder getEncoder() {
