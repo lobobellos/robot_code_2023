@@ -4,7 +4,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Const;
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -16,6 +18,8 @@ public class DriveBase extends SubsystemBase{
   private CANSparkMax rr = new CANSparkMax(Const.drive.rr,MotorType.kBrushless );
 
   private MecanumDrive driveBase;
+
+  ADIS16448_IMU gyro = new ADIS16448_IMU();
   
   public DriveBase(){
 
@@ -33,6 +37,18 @@ public class DriveBase extends SubsystemBase{
 
   public void stop(){
     driveBase.driveCartesian(0,0,0);
+  }
+
+  public void calibrate(){
+    gyro.calibrate();
+  }
+
+  public double getAngle(){
+    return gyro.getGyroAngleZ();
+  }
+
+  public void periodic(){
+    SmartDashboard.putNumber("z angle", getAngle());
   }
 
 }

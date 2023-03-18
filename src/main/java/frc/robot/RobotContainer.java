@@ -28,7 +28,6 @@ private final DriveBase db = new DriveBase();
   final Foot foot = new Foot(pneumatics);
   final Shoulder shoulder= new Shoulder();
   final Elbow elbow = new Elbow();
-  final Gyro gyro = new Gyro();
   final Claw claw = new Claw();
 
   private final CommandXboxController controller = new CommandXboxController(1);
