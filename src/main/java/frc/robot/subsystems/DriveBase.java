@@ -35,7 +35,7 @@ public class DriveBase extends SubsystemBase{
   public void drive(double x,double y, double z){
     driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity);
   }
-  
+
   public void drive(double x,double y, double z,double gyroAngle){
     driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity,new Rotation2d(gyroAngle));
   }
@@ -48,12 +48,18 @@ public class DriveBase extends SubsystemBase{
     gyro.calibrate();
   }
 
-  public double getAngle(){
-    return gyro.getGyroAngleZ();
+  public Rotation2d getAngleZ(){
+    return Rotation2d.fromDegrees(gyro.getGyroAngleZ());
+  }
+  public Rotation2d getAngleY(){
+    return Rotation2d.fromDegrees(gyro.getGyroAngleY());
+  }
+  public Rotation2d getAngleX(){
+    return Rotation2d.fromDegrees(gyro.getGyroAngleX());
   }
 
   public void periodic(){
-    SmartDashboard.putNumber("z angle", getAngle());
+    SmartDashboard.putNumber("z angle", getAngleZ().getDegrees());
   }
 
 }
