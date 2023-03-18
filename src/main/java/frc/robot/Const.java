@@ -21,6 +21,21 @@ public final class Const {
     public static final int rl=2;
     public static final int rr=3;
     public static final double rotateSensitivity = 0.5;
+
+    public static final class pidff {
+      //pid
+      public static final double kP = 0.5;
+      public static final double kI = 0;
+      public static final double kD = 1;
+      // I-zone
+      public static final double kIz = 1;
+      //feed forward control
+      public static final double kS = 0;
+      public static final double kV = 0;
+      //output clamps
+      public static final double minOutput = -1;
+      public static final double maxOutput = 1;
+    }
   }
   
   public static final double  michaelsAge = 4.9679834928365;

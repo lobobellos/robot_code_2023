@@ -30,7 +30,8 @@ private final DriveBase db = new DriveBase();
   final Elbow elbow = new Elbow();
   final Claw claw = new Claw();
 
-  private final CommandXboxController controller = new CommandXboxController(1);
+  private final CommandXboxController bodyController = new CommandXboxController(0);
+  private final CommandXboxController armController = new CommandXboxController(1);
   
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -40,7 +41,7 @@ private final DriveBase db = new DriveBase();
     db.setDefaultCommand(
       new RunCommand(
         ()->{
-          db.drive(controller.getLeftY(),controller.getLeftX(),controller.getRightX());
+          db.drive(bodyController.getLeftY(),bodyController.getLeftX(),bodyController.getRightX());
           SmartDashboard.putBoolean("isDriving", true);
         },
         db
@@ -60,50 +61,50 @@ private final DriveBase db = new DriveBase();
    */
   private void configureButtonBindings() {
 
-    controller.a().onTrue(new InstantCommand(
+    bodyController.a().onTrue(new InstantCommand(
       ()->{
         foot.set(DoubleSolenoid.Value.kForward);
       },
       foot
     ));
     
-    controller.b()
+    bodyController.b()
     .onTrue(new InstantCommand(
       ()->foot.set(DoubleSolenoid.Value.kReverse),
       foot
     ));
     
-    controller.x()
+    bodyController.x()
     .onTrue(new InstantCommand(
       ()->foot.set(DoubleSolenoid.Value.kOff),
       foot
     ));
 
-    controller.y()
+    bodyController.y()
     .onTrue(new InstantCommand(
       ()->pneumatics.toggleDisabled(),
       pneumatics
     ));
 
-    controller.leftBumper()
+    armController.leftBumper()
     .whileTrue(
       new MoveHand(claw, MoveHand.position.closed)
     );
 
-    controller.rightBumper()
+    armController.rightBumper()
     .whileTrue(
       new MoveHand(claw, MoveHand.position.open)
     );
 
-    controller.start()
+    armController.start()
     .onTrue(
       new ResetEncoders(shoulder, elbow, claw)
     );
     
-    controller.povUp()
+    armController.povUp()
     .onTrue(shoulder.moveUp());
 
-    controller.povDown()
+    armController.povDown()
     .onTrue(shoulder.moveDown());
   }
 

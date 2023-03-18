@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Const;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +34,10 @@ public class DriveBase extends SubsystemBase{
 
   public void drive(double x,double y, double z){
     driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity);
+  }
+  
+  public void drive(double x,double y, double z,double gyroAngle){
+    driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity,new Rotation2d(gyroAngle));
   }
 
   public void stop(){
