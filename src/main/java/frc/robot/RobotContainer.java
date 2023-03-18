@@ -106,6 +106,12 @@ private final DriveBase db = new DriveBase();
 
     armController.povDown()
     .onTrue(shoulder.moveDown());
+
+    armController.a()
+    .onTrue(elbow.moveDown());
+
+    armController.y()
+    .onTrue(elbow.moveUp());
   }
 
   /**

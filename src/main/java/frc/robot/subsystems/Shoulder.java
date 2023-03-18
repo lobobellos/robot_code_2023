@@ -45,7 +45,7 @@ public class Shoulder extends SubsystemBase{
   }
 
   public void setSetPoint(double setpoint){
-    controller.setReference(setpoint, ControlType.kPosition);
+    
     this.setpoint = setpoint;
   }
 
@@ -53,9 +53,11 @@ public class Shoulder extends SubsystemBase{
     return setpoint;
   }
 
-  public void periodic(){
+  public void periodic(){     
+    controller.setReference(setpoint, ControlType.kPosition);
     SmartDashboard.putNumber("shoulder encoder ", encoder.getPosition());
-    SmartDashboard.putNumber("ProcessVariable", shoulder.getEncoder().getPosition());
+    SmartDashboard.putNumber("shoulder position", encoder.getPosition());
+    SmartDashboard.putNumber("shoulder setpoint", setpoint);
   }
 
   public RelativeEncoder getEncoder() {
