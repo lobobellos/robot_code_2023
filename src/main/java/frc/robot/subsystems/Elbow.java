@@ -5,18 +5,18 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
   //servo
-  Servo servo = new Servo(Const.elbow.servoID);
+  // Servo servo = new Servo(Const.elbow.servoID);
   //sparkmax stuff
   CANSparkMax motor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
-  SparkMaxPIDController controller = motor.getPIDController();
   RelativeEncoder encoder = motor.getEncoder();
+  SparkMaxPIDController controller = motor.getPIDController();
   //for pid control
   double setpoint = 0;
   
@@ -36,27 +36,40 @@ public class Elbow extends SubsystemBase{
   }
 
   public void setSetPoint(double setpoint){
-    controller.setReference(setpoint, ControlType.kPosition);
     this.setpoint = setpoint;
   }
-
+  
   public double getSetPoint(){
     return setpoint;
   }
 
   //method to actuate the servo
-  public void setServo(double position) {
-    servo.set(position);
-  }
+  // public void setServo(double position) {
+  //   servo.set(position);
+  // }
 
   public RelativeEncoder getEncoder(){
     return encoder;
   }
   
   public void periodic(){
+    controller.setReference(setpoint, ControlType.kPosition);
     //put values on smartDashboard
-    SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
+    //SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
+    SmartDashboard.putNumber("Elbow setpoint ", setpoint);
+  }
+
+  public InstantCommand moveUp(){
+    return new InstantCommand(
+      ()->setpoint++
+    );
+  }
+  
+  public InstantCommand moveDown(){
+    return new InstantCommand(
+      ()->setpoint--
+    );
   }
 
 }
