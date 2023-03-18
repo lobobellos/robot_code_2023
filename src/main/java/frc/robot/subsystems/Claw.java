@@ -34,14 +34,13 @@ public class Claw extends SubsystemBase{
       ()->runPID(),
       this
     ));
-
+    addChild("pidController", controller);
     addChild("clawMotor",clawMotor);
   }
 
   public void periodic(){
     SmartDashboard.putNumber("claw encoder", encoder.getDistance());
     SmartDashboard.putNumber("claw setpoint", setpoint);
-
     SmartDashboard.putNumberArray("claw position",new double[]{encoder.getDistance()});
   }
 
@@ -57,8 +56,6 @@ public class Claw extends SubsystemBase{
   public void setSetPoint(double setpoint){
     this.setpoint =  setpoint;
   }
-
-
 
   public Encoder getEncoder(){
     return encoder;
