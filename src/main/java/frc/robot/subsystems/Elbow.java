@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,8 @@ public class Elbow extends SubsystemBase{
   SparkMaxPIDController controller = motor.getPIDController();
   //for pid control
   double setpoint = 0;
+
+  boolean enabled = true;
   
   public Elbow(){
     //reset
@@ -32,6 +35,18 @@ public class Elbow extends SubsystemBase{
     controller.setOutputRange(
       Const.shoulder.pidff.minOutput,
       Const.shoulder.pidff.maxOutput
+    );
+
+    setDefaultCommand(new RunCommand(
+        ()->{
+          if(enabled){
+            controller.setReference(setpoint, ControlType.kPosition);
+          }else{
+            controller.setReference(0, ControlType.kVoltage);
+          }
+        },
+        this
+      )
     );
   }
 
@@ -53,7 +68,6 @@ public class Elbow extends SubsystemBase{
   }
   
   public void periodic(){
-    controller.setReference(setpoint, ControlType.kPosition);
     //put values on smartDashboard
     //SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
@@ -62,13 +76,19 @@ public class Elbow extends SubsystemBase{
 
   public InstantCommand moveUp(){
     return new InstantCommand(
-      ()->setpoint++
+      ()->setpoint+=3
     );
   }
   
   public InstantCommand moveDown(){
     return new InstantCommand(
-      ()->setpoint--
+      ()->setpoint+=3
+    );
+  }
+
+  public InstantCommand setEnabled(boolean enabled){
+    return new InstantCommand(
+      ()->this.enabled = enabled
     );
   }
 
