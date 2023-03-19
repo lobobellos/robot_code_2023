@@ -79,7 +79,7 @@ public final class Const {
     //pid+ff
     public static final class pidff {
       //pid
-      public static final double kP = 0.02;
+      public static final double kP = 0.005;
       public static final double kI = 0;
       public static final double kD = 0.0005;
       // I-zone
