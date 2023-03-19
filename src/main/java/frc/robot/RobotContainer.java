@@ -95,7 +95,8 @@ private final DriveBase db = new DriveBase();
 
     armController.start()
     .onTrue(
-      new ResetEncoders(shoulder, elbow, claw)
+      new InstantCommand()
+      //TODO: add release and zero functionality
     );
     
     armController.povUp()
