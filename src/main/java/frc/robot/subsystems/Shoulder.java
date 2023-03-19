@@ -47,7 +47,13 @@ public class Shoulder extends SubsystemBase{
     );
 
     setDefaultCommand(new RunCommand(
-        ()->controller.setReference(setpoint, ControlType.kPosition),
+        ()->{
+          if(enabled){
+            controller.setReference(setpoint, ControlType.kPosition);
+          }else{
+            controller.setReference(0, ControlType.kVoltage);
+          }
+        },
         this
       )
     );
@@ -83,7 +89,7 @@ public class Shoulder extends SubsystemBase{
       ()->setpoint++
     );
   }
-  
+
   public InstantCommand setEnabled(boolean enabled){
     return new InstantCommand(
       ()->this.enabled = enabled
