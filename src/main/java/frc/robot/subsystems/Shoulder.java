@@ -66,13 +66,13 @@ public class Shoulder extends SubsystemBase{
 
   public InstantCommand moveUp(){
     return new InstantCommand(
-      ()->setpoint = setpoint == -4 ? setpoint : setpoint-1
+      ()->setpoint--
     );
   }
   
   public InstantCommand moveDown(){
     return new InstantCommand(
-      ()->setpoint = setpoint == -1 ? setpoint : setpoint+1
+      ()->setpoint++
     );
   }
 
