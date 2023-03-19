@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -61,24 +60,8 @@ private final DriveBase db = new DriveBase();
    */
   private void configureButtonBindings() {
 
-    bodyController.a().onTrue(new InstantCommand(
-      ()->{
-        foot.set(DoubleSolenoid.Value.kForward);
-      },
-      foot
-    ));
-    
     bodyController.b()
-    .onTrue(new InstantCommand(
-      ()->foot.set(DoubleSolenoid.Value.kReverse),
-      foot
-    ));
-    
-    bodyController.x()
-    .onTrue(new InstantCommand(
-      ()->foot.set(DoubleSolenoid.Value.kOff),
-      foot
-    ));
+    .onTrue(foot.toggleSolenoid());
 
     bodyController.y()
     .onTrue(pneumatics.toggleCompressor());

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
@@ -19,14 +20,15 @@ public class Foot extends SubsystemBase{
       Const.foot.doubleSolenoid.forwardChannel,
       Const.foot.doubleSolenoid.backwardChannel
     );
+
+    mainSolenoid.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void stop(){
-    mainSolenoid.set(DoubleSolenoid.Value.kOff);
-  }
 
-  public void set(DoubleSolenoid.Value val){
-    mainSolenoid.set(val);
+  public InstantCommand toggleSolenoid(){
+    return new InstantCommand(
+      ()->mainSolenoid.toggle()
+    );
   }
 
   public String getStatus(){
