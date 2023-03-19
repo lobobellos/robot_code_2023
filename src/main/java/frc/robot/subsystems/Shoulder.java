@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
@@ -26,6 +27,8 @@ public class Shoulder extends SubsystemBase{
 
   double setpoint = 0;
 
+  boolean enabled = true;
+
   public Shoulder(){
 
     encoder.setPosition(0);
@@ -42,6 +45,12 @@ public class Shoulder extends SubsystemBase{
       Const.shoulder.pidff.minOutput,
       Const.shoulder.pidff.maxOutput
     );
+
+    setDefaultCommand(new RunCommand(
+        ()->controller.setReference(setpoint, ControlType.kPosition),
+        this
+      )
+    );
   }
 
   public void setSetPoint(double setpoint){
@@ -53,8 +62,7 @@ public class Shoulder extends SubsystemBase{
     return setpoint;
   }
 
-  public void periodic(){     
-    controller.setReference(setpoint, ControlType.kPosition);
+  public void periodic(){ 
     SmartDashboard.putNumber("shoulder encoder ", encoder.getPosition());
     SmartDashboard.putNumber("shoulder position", encoder.getPosition());
     SmartDashboard.putNumber("shoulder setpoint", setpoint);
@@ -75,5 +83,10 @@ public class Shoulder extends SubsystemBase{
       ()->setpoint++
     );
   }
-
+  
+  public InstantCommand setEnabled(boolean enabled){
+    return new InstantCommand(
+      ()->this.enabled = enabled
+    );
+  }
 }
