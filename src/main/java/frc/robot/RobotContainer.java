@@ -84,20 +84,13 @@ private final DriveBase db = new DriveBase();
     .onTrue(pneumatics.toggleCompressor());
 
     armController.leftBumper()
-    .whileTrue(
-      new MoveHand(claw, MoveHand.position.closed)
-    );
+    .whileTrue(new MoveHand(claw, MoveHand.position.closed));
 
     armController.rightBumper()
-    .whileTrue(
-      new MoveHand(claw, MoveHand.position.open)
-    );
+    .whileTrue(new MoveHand(claw, MoveHand.position.open));
 
     armController.start()
-    .onTrue(
-      new InstantCommand()
-      //TODO: add release and zero functionality
-    );
+    .onTrue(new ReleaseAndZero(shoulder, elbow));
     
     armController.povUp()
     .onTrue(shoulder.moveUp());
