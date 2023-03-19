@@ -81,10 +81,7 @@ private final DriveBase db = new DriveBase();
     ));
 
     bodyController.y()
-    .onTrue(new InstantCommand(
-      ()->pneumatics.toggleDisabled(),
-      pneumatics
-    ));
+    .onTrue(pneumatics.toggleCompressor());
 
     armController.leftBumper()
     .whileTrue(
