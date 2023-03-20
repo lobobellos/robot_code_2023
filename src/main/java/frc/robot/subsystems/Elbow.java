@@ -71,7 +71,8 @@ public class Elbow extends SubsystemBase{
     //put values on smartDashboard
     //SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
-    SmartDashboard.putNumber("Elbow setpoint ", setpoint);
+    SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
+    SmartDashboard.putNumber("elbow applied output",motor.getAppliedOutput());
   }
 
   public InstantCommand moveUp(){
@@ -82,7 +83,7 @@ public class Elbow extends SubsystemBase{
   
   public InstantCommand moveDown(){
     return new InstantCommand(
-      ()->setpoint+=3
+      ()->setpoint-=3
     );
   }
 

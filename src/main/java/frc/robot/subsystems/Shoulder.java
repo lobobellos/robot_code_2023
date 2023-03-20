@@ -49,7 +49,7 @@ public class Shoulder extends SubsystemBase{
     setDefaultCommand(new RunCommand(
         ()->{
           if(enabled){
-            controller.setReference(setpoint, ControlType.kPosition);
+            controller.setReference(getSetPoint(), ControlType.kPosition);
           }else{
             controller.setReference(0, ControlType.kVoltage);
           }
@@ -69,9 +69,9 @@ public class Shoulder extends SubsystemBase{
   }
 
   public void periodic(){ 
-    SmartDashboard.putNumber("shoulder encoder ", encoder.getPosition());
     SmartDashboard.putNumber("shoulder position", encoder.getPosition());
-    SmartDashboard.putNumber("shoulder setpoint", setpoint);
+    SmartDashboard.putNumber("shoulder setpoint", getSetPoint());
+    SmartDashboard.putNumber("shoulder applied output",shoulder.getAppliedOutput());
   }
 
   public RelativeEncoder getEncoder() {
