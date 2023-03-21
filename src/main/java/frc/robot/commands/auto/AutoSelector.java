@@ -3,6 +3,7 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.drive.DriveForwards;
 import frc.robot.subsystems.DriveBase;
 
 public class AutoSelector extends CommandBase {
@@ -13,7 +14,7 @@ public class AutoSelector extends CommandBase {
 
     switch(selected){
       case 0:
-      scheduler.schedule(new DriveForwards(db, 5));
+      scheduler.schedule(new DriveForwards(db, 32));
       break;
       case 1:
       scheduler.schedule(new DriveForwards(db, 3));
