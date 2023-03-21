@@ -31,6 +31,12 @@ public class Foot extends SubsystemBase{
     );
   }
 
+  public InstantCommand setSolenoid(DoubleSolenoid.Value val){
+    return new InstantCommand(
+      ()->mainSolenoid.set(val)
+    );
+  }
+
   public String getStatus(){
     return mainSolenoid.get().name();
   }
