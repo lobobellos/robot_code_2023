@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.*;
@@ -39,10 +38,7 @@ private final DriveBase db = new DriveBase();
 
     db.setDefaultCommand(
       new RunCommand(
-        ()->{
-          db.drive(bodyController.getLeftY(),bodyController.getLeftX(),bodyController.getRightX());
-          SmartDashboard.putBoolean("isDriving", true);
-        },
+        ()->db.drive(bodyController.getLeftY(),bodyController.getLeftX(),bodyController.getRightX()),
         db
       )
     );
@@ -66,15 +62,28 @@ private final DriveBase db = new DriveBase();
     bodyController.y()
     .onTrue(pneumatics.toggleCompressor());
 
+    bodyController.leftBumper()
+    .onTrue(
+      new InstantCommand(
+        ()->elbow.setServo(1)
+      )
+    );
+    bodyController.rightBumper()
+    .onTrue(
+      new InstantCommand(
+        ()->elbow.setServo(0)
+      )
+    );
+
+    armController.start()
+    .onTrue(new ReleaseAndZero(shoulder, elbow));
+    
     armController.leftBumper()
     .whileTrue(new MoveHand(claw, MoveHand.position.closed));
 
     armController.rightBumper()
     .whileTrue(new MoveHand(claw, MoveHand.position.open));
 
-    armController.start()
-    .onTrue(new ReleaseAndZero(shoulder, elbow));
-    
     armController.povUp()
     .onTrue(shoulder.moveUp());
 
@@ -86,6 +95,12 @@ private final DriveBase db = new DriveBase();
 
     armController.y()
     .onTrue(elbow.moveUp());
+
+    armController.b()
+    .onTrue(new SequentialCommandGroup(
+      shoulder.moveTo(-3.5),
+      elbow.moveTo(20)
+    ));
   }
 
   /**
