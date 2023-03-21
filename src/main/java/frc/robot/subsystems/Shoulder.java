@@ -48,19 +48,17 @@ public class Shoulder extends SubsystemBase{
 
     setDefaultCommand(new RunCommand(
         ()->{
-          if(enabled){
-            controller.setReference(getSetPoint(), ControlType.kPosition);
-          }else{
-            controller.setReference(0, ControlType.kVoltage);
-          }
+          controller.setReference(getSetPoint(), ControlType.kPosition);
         },
         this
       )
     );
   }
 
+  public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
+  public Runnable release = ()->controller.setReference(0, ControlType.kVoltage);
+
   public void setSetPoint(double setpoint){
-    
     this.setpoint = setpoint;
   }
 
@@ -87,6 +85,12 @@ public class Shoulder extends SubsystemBase{
   public InstantCommand moveDown(){
     return new InstantCommand(
       ()->setpoint++
+    );
+  }
+
+  public InstantCommand moveTo(double setpoint){
+    return new InstantCommand(
+      ()->this.setpoint = setpoint
     );
   }
 
