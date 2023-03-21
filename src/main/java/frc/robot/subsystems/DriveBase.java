@@ -68,6 +68,12 @@ public class DriveBase extends SubsystemBase{
     return sum / encoders.length;
   }
 
+  public void resetEncoders(){
+    for(RelativeEncoder e : encoders){
+      e.setPosition(0);
+    }
+  }
+
   public Rotation2d getAngleZ(){
     return Rotation2d.fromDegrees(gyro.getGyroAngleZ());
   }
@@ -80,6 +86,7 @@ public class DriveBase extends SubsystemBase{
 
   public void periodic(){
     SmartDashboard.putNumber("z angle", getAngleZ().getDegrees());
+    SmartDashboard.putNumber("db average dist", getAverageDist());
   }
 
 }
