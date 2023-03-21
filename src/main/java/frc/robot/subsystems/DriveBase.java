@@ -44,8 +44,8 @@ public class DriveBase extends SubsystemBase{
     driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity);
   }
 
-  public void drive(double x,double y, double z,double gyroAngle){
-    driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity,new Rotation2d(gyroAngle));
+  public void drive(double x,double y, double z,Rotation2d gyroAngle){
+    driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity,gyroAngle);
   }
 
   public void stop(){
