@@ -24,9 +24,9 @@ public final class Const {
 
     public static final class pidff {
       //pid
-      public static final double kP = 0.5;
+      public static final double kP = 0.05;
       public static final double kI = 0;
-      public static final double kD = 1;
+      public static final double kD = 0.002;
       // I-zone
       public static final double kIz = 1;
       //feed forward control
