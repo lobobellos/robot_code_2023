@@ -3,7 +3,6 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.Const;
 import frc.robot.subsystems.DriveBase;
 
 public class TurnTo extends RunCommand{
@@ -11,9 +10,9 @@ public class TurnTo extends RunCommand{
   DriveBase db;
 
   static PIDController controller = new PIDController(
-    Const.drive.pidff.kP,
-    Const.drive.pidff.kI,
-    Const.drive.pidff.kD
+    0.009,
+    0.7e-2,
+    0.009
   );
 
   Rotation2d setpoint;
