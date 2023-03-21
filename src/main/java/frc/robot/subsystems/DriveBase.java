@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Const;
@@ -17,6 +18,13 @@ public class DriveBase extends SubsystemBase{
   private CANSparkMax fr = new CANSparkMax(Const.drive.fr,MotorType.kBrushless );
   private CANSparkMax rl = new CANSparkMax(Const.drive.rl,MotorType.kBrushless );
   private CANSparkMax rr = new CANSparkMax(Const.drive.rr,MotorType.kBrushless );
+
+  private RelativeEncoder[] encoders = {
+    fl.getEncoder(),
+    fr.getEncoder(),
+    rl.getEncoder(),
+    rr.getEncoder()
+  };
 
   private MecanumDrive driveBase;
 
@@ -46,6 +54,18 @@ public class DriveBase extends SubsystemBase{
 
   public void calibrate(){
     gyro.calibrate();
+  }
+
+  public RelativeEncoder[] getEncoders(){
+    return encoders;
+  }
+
+  public double getAverageDist(){
+    double sum = 0;
+    for(RelativeEncoder e : encoders){
+      sum += e.getPosition();
+    }
+    return sum / encoders.length;
   }
 
   public Rotation2d getAngleZ(){
