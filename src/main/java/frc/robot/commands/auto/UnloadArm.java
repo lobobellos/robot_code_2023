@@ -7,8 +7,8 @@ import frc.robot.commands.ReleaseAndZero;
 import frc.robot.subsystems.Elbow;
 import frc.robot.subsystems.Shoulder;
 
-public class Autonomous extends SequentialCommandGroup {
-  public Autonomous(Shoulder shoulder,Elbow elbow){
+public class UnloadArm extends SequentialCommandGroup {
+  public UnloadArm(Shoulder shoulder,Elbow elbow){
     super(
       new InstantCommand(
         // TODO: set the values
