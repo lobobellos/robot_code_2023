@@ -5,11 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.auto.AutoSelector;
+import frc.robot.commands.drive.TurnTo;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -47,7 +49,6 @@ private final DriveBase db = new DriveBase();
       )
     );
     
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -78,6 +79,9 @@ private final DriveBase db = new DriveBase();
         ()->elbow.setServo(0)
       )
     );
+
+    bodyController.start()
+    .onTrue(new TurnTo(db, Rotation2d.fromDegrees(90)));
 
     armController.start()
     .onTrue(new ReleaseAndZero(shoulder, elbow));
