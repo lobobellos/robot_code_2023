@@ -67,8 +67,6 @@ public final class Const {
     }
 
     public static final double tolerance = 0;
-
-    public static final double speedRatio = 0.5;
     
   }
 
@@ -79,14 +77,13 @@ public final class Const {
     //pid+ff
     public static final class pidff {
       //pid
-      public static final double kP = 0.02;
+      public static final double kP = 5.5;
       public static final double kI = 0;
-      public static final double kD = 0.005;
+      public static final double kD = 0.1;
       // I-zone
-      public static final double kIz = 1;
+      public static final double kIz = 0;
       //feed forward control
-      public static final double kS = 0;
-      public static final double kV = 0;
+      public static final double kFF = 0;
       //output clamps
       public static final double minOutput = -1;
       public static final double maxOutput = 1;
