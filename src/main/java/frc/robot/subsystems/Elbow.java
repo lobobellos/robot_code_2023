@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -37,6 +38,8 @@ public class Elbow extends SubsystemBase{
       Const.elbow.pidff.minOutput,
       Const.elbow.pidff.maxOutput
     );
+
+    motor.setIdleMode(IdleMode.kBrake);
 
     setDefaultCommand(new RunCommand(
         runPID,
