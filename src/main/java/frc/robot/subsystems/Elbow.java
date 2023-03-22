@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -17,11 +18,13 @@ public class Elbow extends SubsystemBase{
   //servo
   Servo servo = new Servo(Const.elbow.servoID);
   //sparkmax stuff
-  CANSparkMax motor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
-  RelativeEncoder encoder = motor.getEncoder();
-  SparkMaxPIDController controller = motor.getPIDController();
+  CANSparkMax NEOmotor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
+  RelativeEncoder encoder = NEOmotor.getEncoder();
+  SparkMaxPIDController controller = NEOmotor.getPIDController();
   //for pid control
   double setpoint = 0;
+
+  WPI_VictorSPX victorMotor = new WPI_VictorSPX(14);
   
   public Elbow(){
     //reset
@@ -37,7 +40,9 @@ public class Elbow extends SubsystemBase{
       Const.elbow.pidff.maxOutput
     );
 
-    motor.setIdleMode(IdleMode.kBrake);
+    NEOmotor.setIdleMode(IdleMode.kBrake);
+
+    victorMotor.setInverted(true);
 
     setDefaultCommand(new RunCommand(
         runPID,
@@ -46,7 +51,12 @@ public class Elbow extends SubsystemBase{
     );
   }
 
-  public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
+  public Runnable runPID = ()->{
+    controller.setReference(getSetPoint(), ControlType.kPosition);
+    victorMotor.set(NEOmotor.getAppliedOutput());
+  };
+
+
   public Runnable release = ()->controller.setReference(0, ControlType.kVoltage);
 
   public void setSetPoint(double setpoint){
@@ -71,8 +81,8 @@ public class Elbow extends SubsystemBase{
     //SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
     SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
-    SmartDashboard.putNumber("elbow applied output",motor.getAppliedOutput());
-    SmartDashboard.putNumber("elbow output current",motor.getOutputCurrent());
+    SmartDashboard.putNumber("elbow applied output",NEOmotor.getAppliedOutput());
+    SmartDashboard.putNumber("elbow output current",NEOmotor.getOutputCurrent());
     SmartDashboard.putNumberArray("elbow position",new double[]{encoder.getPosition()});
   }
 
