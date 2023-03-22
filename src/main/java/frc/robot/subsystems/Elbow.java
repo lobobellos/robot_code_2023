@@ -22,8 +22,6 @@ public class Elbow extends SubsystemBase{
   SparkMaxPIDController controller = motor.getPIDController();
   //for pid control
   double setpoint = 0;
-
-  boolean enabled = true;
   
   public Elbow(){
     //reset
@@ -92,14 +90,10 @@ public class Elbow extends SubsystemBase{
 
   public InstantCommand moveTo(double setpoint){
     return new InstantCommand(
-      ()->this.setpoint = setpoint
+      ()->setSetPoint(setpoint)
     );
   }
 
-  public InstantCommand setEnabled(boolean enabled){
-    return new InstantCommand(
-      ()->this.enabled = enabled
-    );
-  }
+
 
 }
