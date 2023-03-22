@@ -1,5 +1,6 @@
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;  
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -8,13 +9,27 @@ import frc.robot.commands.ResetEncoders;
 import frc.robot.subsystems.Elbow;
 import frc.robot.subsystems.Shoulder;
 
-public class UnloadArm extends ParallelCommandGroup {
+public class UnloadArm extends SequentialCommandGroup {
+
+  static boolean runShoulder = true;
+  static boolean runElbow = true;
+
+
   public UnloadArm(Shoulder shoulder,Elbow elbow){
     super(
-      new RunCommand(
+      new ParallelCommandGroup(
+        new RunCommand(
         ()->{
-          shoulder.runPID.run();
-          elbow.runPID.run();
+          if(runShoulder){
+            shoulder.runPID.run();
+          }else{
+            shoulder.release.run();
+          }
+          if(runElbow){
+            elbow.runPID.run();
+          }else{
+            elbow.release.run();
+          }
         },
         shoulder,elbow
       ),
@@ -26,17 +41,29 @@ public class UnloadArm extends ParallelCommandGroup {
         new WaitCommand(0.75),
         shoulder.moveTo(4),
         new WaitCommand(0.75),
+
+        elbow.moveTo(-6),
+        new WaitCommand(0.5),
+
         shoulder.moveTo(5.5),
+        new WaitCommand(0.5),
+
+        elbow.moveTo(-15),
         new WaitCommand(0.75),
+
+
         shoulder.moveTo(6.5),
         new WaitCommand(0.75),
-        //shoulder is horisontal now
-        new ResetEncoders(shoulder, elbow),
-        elbow.moveTo(-2),
-        
-        new WaitCommand(3),
-        shoulder.moveTo(2)
+        new WaitCommand(1),
+        shoulder.moveTo(12),
+
+        new InstantCommand(()->runShoulder = false),
+        new WaitCommand(2),
+
+        elbow.moveTo(-23)
         )
+      )
+       
     );
   }
 }
