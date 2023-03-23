@@ -45,7 +45,6 @@ private final DriveBase db = new DriveBase();
           bodyController.getLeftY(),
           bodyController.getLeftX(),
           bodyController.getRightX(),
-          db.getAngleZ(),
           true
         ),
         db
@@ -81,8 +80,12 @@ private final DriveBase db = new DriveBase();
     .onTrue(new InstantCommand(db.calibrate()));
 
     //back to turn off gyro
-
+    bodyController.back()
+    .onTrue(db.setWithGyro(false));
+    
     //start to turn it on
+    bodyController.start()
+    .onTrue(db.setWithGyro(true));
 
     armController.start()
     .onTrue(new ReleaseAndZero(shoulder, elbow));

@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -29,6 +30,8 @@ public class DriveBase extends SubsystemBase{
   private MecanumDrive driveBase;
 
   ADIS16448_IMU gyro = new ADIS16448_IMU();
+
+  boolean withGyro = false;
   
   public DriveBase(){
 
@@ -45,19 +48,26 @@ public class DriveBase extends SubsystemBase{
   }
 
   public void drive(double x,double y, double z,boolean applyMichaelRule){
-    driveBase.driveCartesian(
-      applyMichaelRule ? michaelRule(-x) : -x,
-      applyMichaelRule ? michaelRule(y): y,
-      (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity
-    );
+    if(withGyro){
+      driveBase.driveCartesian(
+        applyMichaelRule ? michaelRule(-x) : -x,
+        applyMichaelRule ? michaelRule(y): y,
+        (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity,
+        getAngleZ()
+      );
+    }else{
+      driveBase.driveCartesian(
+        applyMichaelRule ? michaelRule(-x) : -x,
+        applyMichaelRule ? michaelRule(y): y,
+        (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity
+      );
+
+    }
   }
 
-  public void drive(double x,double y, double z,Rotation2d gyroAngle,boolean applyMichaelRule){
-    driveBase.driveCartesian(
-      applyMichaelRule ? michaelRule(-x) : -x,
-      applyMichaelRule ? michaelRule(y): y,
-      (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity,
-      gyroAngle
+  public InstantCommand setWithGyro(boolean withGyro){
+    return new InstantCommand(
+      ()->this.withGyro = withGyro
     );
   }
 
