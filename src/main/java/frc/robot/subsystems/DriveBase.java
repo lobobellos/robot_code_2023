@@ -49,19 +49,24 @@ public class DriveBase extends SubsystemBase{
       applyMichaelRule ? michaelRule(-x) : -x,
       applyMichaelRule ? michaelRule(y): y,
       (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity
-      );
+    );
   }
 
-  public void drive(double x,double y, double z,Rotation2d gyroAngle){
-    driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity,gyroAngle);
+  public void drive(double x,double y, double z,Rotation2d gyroAngle,boolean applyMichaelRule){
+    driveBase.driveCartesian(
+      applyMichaelRule ? michaelRule(-x) : -x,
+      applyMichaelRule ? michaelRule(y): y,
+      (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity,
+      gyroAngle
+    );
   }
 
   public void stop(){
     driveBase.driveCartesian(0,0,0);
   }
 
-  public void calibrate(){
-    gyro.calibrate();
+  public Runnable calibrate(){
+    return ()->gyro.calibrate();
   }
 
   public RelativeEncoder[] getEncoders(){
