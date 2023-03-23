@@ -12,11 +12,17 @@ import frc.robot.subsystems.Shoulder;
 public class UnloadArm extends SequentialCommandGroup {
 
   static boolean runShoulder = true;
-  static boolean runElbow = true;
+  static boolean runElbow = false;
 
 
   public UnloadArm(Shoulder shoulder,Elbow elbow){
     super(
+      new InstantCommand(
+        ()->{
+          runShoulder = true;
+          runElbow = false;
+        }
+      ),
       new ParallelCommandGroup(
         new RunCommand(
         ()->{
@@ -36,31 +42,40 @@ public class UnloadArm extends SequentialCommandGroup {
       new SequentialCommandGroup(
         new ResetEncoders(shoulder, elbow),
         shoulder.moveTo(2.0),
-        new WaitCommand(2),
+        new WaitCommand(1),
         shoulder.moveTo(3),
         new WaitCommand(0.75),
         shoulder.moveTo(4),
         new WaitCommand(0.75),
-
-        elbow.moveTo(-6),
-        new WaitCommand(0.5),
-
         shoulder.moveTo(5.5),
         new WaitCommand(0.5),
-
-        elbow.moveTo(-15),
-        new WaitCommand(0.75),
-
-
         shoulder.moveTo(6.5),
-        new WaitCommand(0.75),
-        new WaitCommand(1),
-        shoulder.moveTo(12),
+
+
+        //safe code
 
         new InstantCommand(()->runShoulder = false),
-        new WaitCommand(2),
+        new WaitCommand(1),
+        new ResetEncoders(shoulder, elbow),
+        new InstantCommand(()->runElbow = true),
+        
+        new WaitCommand(0.5),
+        elbow.moveTo(-2),
+        new WaitCommand(0.5),
+        elbow.moveTo(-4),
+        new WaitCommand(0.5),
+        elbow.moveTo(-6),
+        new WaitCommand(0.5),
+        elbow.moveTo(-8),
+        new WaitCommand(0.5),
+        elbow.moveTo(-10),
+        new WaitCommand(1.5),
 
-        elbow.moveTo(-23)
+        elbow.moveTo(-20),
+        new WaitCommand(3.5),
+        
+        new InstantCommand(()->runElbow = false),
+        new ResetEncoders(shoulder, elbow)
         )
       )
        
