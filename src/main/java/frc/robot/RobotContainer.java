@@ -41,7 +41,12 @@ private final DriveBase db = new DriveBase();
 
     db.setDefaultCommand(
       new RunCommand(
-        ()->db.drive(bodyController.getLeftY(),bodyController.getLeftX(),bodyController.getRightX()),
+        ()->db.drive(
+          bodyController.getLeftY(),
+          bodyController.getLeftX(),
+          bodyController.getRightX(),
+          true
+        ),
         db
       )
     );
