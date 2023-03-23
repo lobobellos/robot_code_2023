@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
@@ -44,6 +45,8 @@ public class Elbow extends SubsystemBase{
 
     victorMotor.setInverted(true);
 
+    victorMotor.setNeutralMode(NeutralMode.Coast);
+
     setDefaultCommand(new RunCommand(
         runPID,
         this
@@ -82,7 +85,8 @@ public class Elbow extends SubsystemBase{
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
     SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
     SmartDashboard.putNumber("elbow applied output",NEOmotor.getAppliedOutput());
-    SmartDashboard.putNumber("elbow output current",NEOmotor.getOutputCurrent());
+    SmartDashboard.putNumber("elbow CIM applied output",victorMotor.get());
+
     SmartDashboard.putNumberArray("elbow position",new double[]{encoder.getPosition()});
   }
 
