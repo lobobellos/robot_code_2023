@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.drive.DriveForwards;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Elbow;
@@ -61,9 +62,9 @@ public class AutoSelector extends CommandBase {
       case "center":
       scheduler.schedule(
         new SequentialCommandGroup(
-          new DriveForwards(db, 10),
-          foot.setSolenoid(DoubleSolenoid.Value.kForward)
-
+          new DriveForwards(db, 50),
+          foot.setSolenoid(DoubleSolenoid.Value.kReverse),
+          new WaitCommand(2)
         )
       );
       break;
@@ -71,7 +72,7 @@ public class AutoSelector extends CommandBase {
       scheduler.schedule(
         new SequentialCommandGroup(
           //new UnloadArm
-          new DriveForwards(db, 32)
+          new DriveForwards(db, 40)
         )
       ); //TODO: make third auto
       break;
