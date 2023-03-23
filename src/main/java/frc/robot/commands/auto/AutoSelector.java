@@ -53,8 +53,8 @@ public class AutoSelector extends CommandBase {
       scheduler.schedule(
         new SequentialCommandGroup(
 
-          new UnloadArm(shoulder, elbow)
-        //new DriveForwards(db,25)
+        new UnloadArm(shoulder, elbow),
+        new DriveForwards(db,50)
         )
         );
 
@@ -62,19 +62,19 @@ public class AutoSelector extends CommandBase {
       case "center":
       scheduler.schedule(
         new SequentialCommandGroup(
+          new UnloadArm(shoulder, elbow),
           new DriveForwards(db, 50),
-          foot.setSolenoid(DoubleSolenoid.Value.kReverse),
-          new WaitCommand(2)
+          foot.setSolenoid(DoubleSolenoid.Value.kReverse) 
         )
       );
       break;
       case "right":
       scheduler.schedule(
         new SequentialCommandGroup(
-          //new UnloadArm
-          new DriveForwards(db, 40)
+          new UnloadArm(shoulder, elbow),
+          new DriveForwards(db,50)
         )
-      ); //TODO: make third auto
+      ); 
       break;
     } 
     
