@@ -25,7 +25,7 @@ public class Elbow extends SubsystemBase{
   //for pid control
   double setpoint = 0;
 
-  WPI_VictorSPX victorMotor = new WPI_VictorSPX(14);
+  //WPI_VictorSPX victorMotor = new WPI_VictorSPX(14);
   
   public Elbow(){
     //reset
@@ -41,11 +41,11 @@ public class Elbow extends SubsystemBase{
       Const.elbow.pidff.maxOutput
     );
 
-    NEOmotor.setIdleMode(IdleMode.kBrake);
+    NEOmotor.setIdleMode(IdleMode.kCoast);
 
-    victorMotor.setInverted(true);
+    //victorMotor.setInverted(true);
 
-    victorMotor.setNeutralMode(NeutralMode.Coast);
+    //victorMotor.setNeutralMode(NeutralMode.Coast);
 
     setDefaultCommand(new RunCommand(
         runPID,
@@ -56,7 +56,7 @@ public class Elbow extends SubsystemBase{
 
   public Runnable runPID = ()->{
     controller.setReference(getSetPoint(), ControlType.kPosition);
-    victorMotor.set(NEOmotor.getAppliedOutput());
+    //victorMotor.set(NEOmotor.getAppliedOutput());
   };
 
 
@@ -85,7 +85,7 @@ public class Elbow extends SubsystemBase{
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
     SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
     SmartDashboard.putNumber("elbow applied output",NEOmotor.getAppliedOutput());
-    SmartDashboard.putNumber("elbow CIM applied output",victorMotor.get());
+    //SmartDashboard.putNumber("elbow CIM applied output",victorMotor.get());
 
     SmartDashboard.putNumberArray("elbow position",new double[]{encoder.getPosition()});
   }
