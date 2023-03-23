@@ -40,8 +40,16 @@ public class DriveBase extends SubsystemBase{
     addChild("driveBase",driveBase);
   }
 
-  public void drive(double x,double y, double z){
-    driveBase.driveCartesian(-x, y, z*Const.drive.rotateSensitivity);
+  double michaelRule(double in){
+    return Math.pow(in,3);
+  }
+
+  public void drive(double x,double y, double z,boolean applyMichaelRule){
+    driveBase.driveCartesian(
+      applyMichaelRule ? michaelRule(-x) : -x,
+      applyMichaelRule ? michaelRule(y): y,
+      (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity
+      );
   }
 
   public void drive(double x,double y, double z,Rotation2d gyroAngle){

@@ -26,7 +26,8 @@ public class TurnTo extends RunCommand{
           controller.calculate(
             db.getAngleZ().getDegrees(),
             setpoint.getDegrees()
-          )
+          ),
+          false
         );
       }, 
       db
