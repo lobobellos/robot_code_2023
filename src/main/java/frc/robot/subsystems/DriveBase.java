@@ -5,6 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Const;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -44,7 +45,15 @@ public class DriveBase extends SubsystemBase{
   }
 
   double michaelRule(double in){
-    return Math.pow(in,3);
+
+    //x^3 + 0.2x
+    double res = MathUtil.clamp(
+      Math.pow(in,3)+(0.2*in),
+      -1,
+      1
+    );
+
+    return res;
   }
 
   public void drive(double x,double y, double z,boolean applyMichaelRule){
