@@ -36,7 +36,7 @@ public class AutoSelector extends CommandBase {
     this.elbow = elbow;
     this.foot = foot;
 
-    autoChooser.setDefaultOption("Left", AutoType.left);
+    autoChooser.setDefaultOption("left", AutoType.left);
     autoChooser.addOption("right", AutoType.right);
     autoChooser.addOption("center", AutoType.center);
     autoChooser.addOption("left", AutoType.left);
@@ -46,7 +46,7 @@ public class AutoSelector extends CommandBase {
   
   @Override
   public void initialize() {
-    
+
     switch(  autoChooser.getSelected().name()){
       case "left":
       scheduler.schedule(
