@@ -29,7 +29,7 @@ private final DriveBase db = new DriveBase();
   final Elbow elbow = new Elbow();
   final Claw claw = new Claw();
 
-  final AutoSelector selector = new AutoSelector(db, shoulder, elbow);
+  final AutoSelector selector = new AutoSelector(db,shoulder,elbow,foot);
 
   private final CommandXboxController bodyController = new CommandXboxController(0);
   private final CommandXboxController armController = new CommandXboxController(1);
@@ -49,6 +49,10 @@ private final DriveBase db = new DriveBase();
     // Configure the button bindings
     configureButtonBindings();
   }
+
+  /*
+   * 
+   */
 
   private void configureButtonBindings() {
 
@@ -97,8 +101,8 @@ private final DriveBase db = new DriveBase();
 
     armController.b()
     .onTrue(new SequentialCommandGroup(
-      shoulder.moveTo(-3.5),
-      elbow.moveTo(20)
+      //shoulder.moveTo(-3.5),
+      //elbow.moveTo(20)
     ));
   }
 
