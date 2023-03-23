@@ -34,13 +34,14 @@ public class DriveForwards extends RunCommand{
       },
       db
     );
-    controller.setTolerance(0.1,0.1);
+    controller.setTolerance(2,2);
     db.resetEncoders();
     SmartDashboard.putNumber("db setpoint",setpoint);
   }
 
   @Override
   public boolean isFinished() {
+    System.out.println("driveForward finished");
     return controller.atSetpoint();
   }
 }
