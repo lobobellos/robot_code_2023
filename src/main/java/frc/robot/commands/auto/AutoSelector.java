@@ -16,8 +16,8 @@ import frc.robot.subsystems.Shoulder;
 public class AutoSelector extends CommandBase {
   
   public static enum AutoType{
-    left,
-    right,
+    longer,
+    shorter,
     center
   }
 
@@ -37,10 +37,10 @@ public class AutoSelector extends CommandBase {
     this.elbow = elbow;
     this.foot = foot;
 
-    autoChooser.setDefaultOption("left", AutoType.left);
-    autoChooser.addOption("right", AutoType.right);
+    autoChooser.setDefaultOption("long", AutoType.longer);
+    autoChooser.addOption("short", AutoType.shorter);
     autoChooser.addOption("center", AutoType.center);
-    autoChooser.addOption("left", AutoType.left);
+    autoChooser.addOption("long", AutoType.longer);
     SmartDashboard.putData("Auto choices", autoChooser);
 
   }
@@ -48,36 +48,32 @@ public class AutoSelector extends CommandBase {
   @Override
   public void initialize() {
 
-    switch(  autoChooser.getSelected().name()){
-      case "left":
+    SmartDashboard.putString("selected auto", autoChooser.getSelected().name());
+    db.resetEncoders();
+
+    AutoType name =  autoChooser.getSelected();
+
+    if(name == AutoType.longer){
       scheduler.schedule(
         new SequentialCommandGroup(
-
-        new UnloadArm(shoulder, elbow),
-        new DriveForwards(db,50)
-        )
-        );
-
-      break;
-      case "center":
-      scheduler.schedule(
-        new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow),
-          new DriveForwards(db, 50),
-          //new Balance(db),
-          foot.setSolenoid(DoubleSolenoid.Value.kReverse) 
+        
+          new DriveForwards(db,100)
         )
       );
-      break;
-      case "right":
+    }else if(name == AutoType.center){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow),
+          foot.setSolenoid(DoubleSolenoid.Value.kReverse), 
+          //new DriveForwards(db, 50),
+          new UnloadArm(shoulder, elbow)
+        )
+      );
+    }else if(name ==AutoType.shorter){
+      scheduler.schedule(
+        new SequentialCommandGroup(
           new DriveForwards(db,50)
         )
       ); 
-      break;
-    } 
-    
+    }    
   }
 }

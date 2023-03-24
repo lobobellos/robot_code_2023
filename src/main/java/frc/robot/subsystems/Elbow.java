@@ -92,13 +92,13 @@ public class Elbow extends SubsystemBase{
 
   public InstantCommand moveUp(){
     return new InstantCommand(
-      ()->setpoint+=2
+      ()->setpoint+=4
     );
   }
   
   public InstantCommand moveDown(){
     return new InstantCommand(
-      ()->setpoint-=2
+      ()->setpoint-=4
     );
   }
 

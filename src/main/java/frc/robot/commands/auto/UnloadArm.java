@@ -14,6 +14,7 @@ public class UnloadArm extends SequentialCommandGroup {
   static boolean runShoulder = true;
   static boolean runElbow = false;
 
+  static boolean toEnd = false;
 
   public UnloadArm(Shoulder shoulder,Elbow elbow){
     super(
@@ -21,10 +22,12 @@ public class UnloadArm extends SequentialCommandGroup {
         ()->{
           runShoulder = true;
           runElbow = false;
+          toEnd = false;
+          System.out.println("inside the thing");
         }
       ),
       new ParallelCommandGroup(
-        new RunCommand(
+        new RunUntilStop(
         ()->{
           if(runShoulder){
             shoulder.runPID.run();
@@ -37,7 +40,7 @@ public class UnloadArm extends SequentialCommandGroup {
             elbow.release.run();
           }
         },
-        shoulder,elbow
+        ()->toEnd
       ),
       new SequentialCommandGroup(
         new ResetEncoders(shoulder, elbow),
@@ -55,30 +58,29 @@ public class UnloadArm extends SequentialCommandGroup {
         //safe code
 
         new InstantCommand(()->runShoulder = false),
-        new WaitCommand(1),
         new ResetEncoders(shoulder, elbow),
         new InstantCommand(()->runElbow = true),
         
         new WaitCommand(0.5),
-        elbow.moveTo(-2),
-        new WaitCommand(0.5),
-        elbow.moveTo(-4),
-        new WaitCommand(0.5),
-        elbow.moveTo(-6),
-        new WaitCommand(0.5),
-        elbow.moveTo(-8),
-        new WaitCommand(0.5),
+
         elbow.moveTo(-10),
         new WaitCommand(1.5),
 
         elbow.moveTo(-20),
-        new WaitCommand(3.5),
+        new WaitCommand(1.5),
+        elbow.moveTo(-40),
+        new WaitCommand(1.5),
         
-        new InstantCommand(()->runElbow = false),
-        new ResetEncoders(shoulder, elbow)
+
+        elbow.moveTo(-60),
+        new WaitCommand(1.5),
+        
+        new InstantCommand(()->runElbow = false)
+
         )
       )
        
     );
+    System.out.println("construvtor");
   }
 }
