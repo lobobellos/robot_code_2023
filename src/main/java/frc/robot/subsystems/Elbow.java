@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -12,20 +10,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
-import edu.wpi.first.wpilibj.Servo;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
-  //servo
-  Servo servo = new Servo(Const.elbow.servoID);
   //sparkmax stuff
   CANSparkMax NEOmotor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
   RelativeEncoder encoder = NEOmotor.getEncoder();
   SparkMaxPIDController controller = NEOmotor.getPIDController();
   //for pid control
   double setpoint = 0;
-
-  //WPI_VictorSPX victorMotor = new WPI_VictorSPX(14);
   
   public Elbow(){
     //reset
@@ -43,10 +37,6 @@ public class Elbow extends SubsystemBase{
 
     NEOmotor.setIdleMode(IdleMode.kCoast);
 
-    //victorMotor.setInverted(true);
-
-    //victorMotor.setNeutralMode(NeutralMode.Coast);
-
     setDefaultCommand(new RunCommand(
         runPID,
         this
@@ -59,7 +49,6 @@ public class Elbow extends SubsystemBase{
     //victorMotor.set(NEOmotor.getAppliedOutput());
   };
 
-
   public Runnable release = ()->controller.setReference(0, ControlType.kVoltage);
 
   public void setSetPoint(double setpoint){
@@ -70,22 +59,15 @@ public class Elbow extends SubsystemBase{
     return setpoint;
   }
 
-
-  public void setServo(double position) {
-    servo.set(position);
-  }
-
   public RelativeEncoder getEncoder(){
     return encoder;
   }
   
   public void periodic(){
     //put values on smartDashboard
-    //SmartDashboard.putNumber("Elbow servo ", servo.getPosition());
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
     SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
     SmartDashboard.putNumber("elbow applied output",NEOmotor.getAppliedOutput());
-    //SmartDashboard.putNumber("elbow CIM applied output",victorMotor.get());
 
     SmartDashboard.putNumberArray("elbow position",new double[]{encoder.getPosition()});
   }
