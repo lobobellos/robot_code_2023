@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.MoveHand;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Elbow;
 import frc.robot.subsystems.Shoulder;
 
@@ -18,7 +19,7 @@ public class UnloadArm extends SequentialCommandGroup {
 
   static boolean toEnd = false;
 
-  public UnloadArm(Shoulder shoulder,Elbow elbow,Claw claw){
+  public UnloadArm(Shoulder shoulder,Elbow elbow,Claw claw,DriveBase db){
     super(
       new InstantCommand(
         ()->{
@@ -42,6 +43,7 @@ public class UnloadArm extends SequentialCommandGroup {
           }
 
           claw.runPID();
+          db.drive(0, 0, 0, false);
         }
         ),
         new SequentialCommandGroup(

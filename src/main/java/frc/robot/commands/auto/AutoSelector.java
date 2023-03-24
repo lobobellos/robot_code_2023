@@ -54,14 +54,14 @@ public class AutoSelector extends CommandBase {
     if(name == AutoType.longer){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw),
+          new UnloadArm(shoulder, elbow, claw,db),
           new DriveForwards(db,120)
         )
       );
     }else if(name == AutoType.center){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw),
+          new UnloadArm(shoulder, elbow, claw, db),
           new DriveForwards(db,60),
           foot.setSolenoid(DoubleSolenoid.Value.kReverse)
         )
@@ -69,7 +69,7 @@ public class AutoSelector extends CommandBase {
     }else if(name ==AutoType.shorter){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw),
+          new UnloadArm(shoulder, elbow, claw, db),
           new DriveForwards(db,80)
         )
       ); 
