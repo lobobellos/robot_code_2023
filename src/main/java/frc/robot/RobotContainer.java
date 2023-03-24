@@ -29,7 +29,7 @@ private final DriveBase db = new DriveBase();
   final Elbow elbow = new Elbow();
   final Claw claw = new Claw();
 
-  final AutoSelector selector = new AutoSelector(db,shoulder,elbow,foot);
+  final AutoSelector selector = new AutoSelector(db,shoulder,elbow,foot, claw);
 
   private final CommandXboxController bodyController = new CommandXboxController(0);
   private final CommandXboxController armController = new CommandXboxController(1);

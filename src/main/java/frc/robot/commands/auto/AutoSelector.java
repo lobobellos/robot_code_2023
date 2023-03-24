@@ -8,10 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import frc.robot.commands.drive.Balance;
 import frc.robot.commands.drive.DriveForwards;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Elbow;
-import frc.robot.subsystems.Foot;
-import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.*;
 
 public class AutoSelector extends CommandBase {
   
@@ -29,13 +26,14 @@ public class AutoSelector extends CommandBase {
   final Shoulder shoulder;
   final Elbow elbow;
   final Foot foot;
+  final Claw claw;
 
-  public AutoSelector(DriveBase db,Shoulder shoulder,Elbow elbow,Foot foot){
-
+  public AutoSelector(DriveBase db,Shoulder shoulder,Elbow elbow,Foot foot,Claw claw){
     this.db = db;
     this.shoulder = shoulder;
     this.elbow = elbow;
     this.foot = foot;
+    this.claw = claw;
 
     autoChooser.setDefaultOption("long", AutoType.longer);
     autoChooser.addOption("short", AutoType.shorter);
@@ -56,16 +54,16 @@ public class AutoSelector extends CommandBase {
     if(name == AutoType.longer){
       scheduler.schedule(
         new SequentialCommandGroup(
-        
+
           new DriveForwards(db,100)
         )
       );
     }else if(name == AutoType.center){
       scheduler.schedule(
         new SequentialCommandGroup(
-          foot.setSolenoid(DoubleSolenoid.Value.kReverse), 
-          //new DriveForwards(db, 50),
-          new UnloadArm(shoulder, elbow)
+          
+          new UnloadArm(shoulder, elbow, claw)
+          //foot.setSolenoid(DoubleSolenoid.Value.kReverse), 
         )
       );
     }else if(name ==AutoType.shorter){
