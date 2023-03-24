@@ -1,11 +1,13 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;  
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.ResetEncoders;
+import frc.robot.commands.MoveHand;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elbow;
 import frc.robot.subsystems.Shoulder;
 
@@ -16,18 +18,17 @@ public class UnloadArm extends SequentialCommandGroup {
 
   static boolean toEnd = false;
 
-  public UnloadArm(Shoulder shoulder,Elbow elbow){
+  public UnloadArm(Shoulder shoulder,Elbow elbow,Claw claw){
     super(
       new InstantCommand(
         ()->{
           runShoulder = true;
           runElbow = false;
           toEnd = false;
-          System.out.println("inside the thing");
         }
       ),
-      new ParallelCommandGroup(
-        new RunUntilStop(
+      new ParallelRaceGroup(
+        new RunCommand(
         ()->{
           if(runShoulder){
             shoulder.runPID.run();
@@ -39,48 +40,60 @@ public class UnloadArm extends SequentialCommandGroup {
           }else{
             elbow.release.run();
           }
-        },
-        ()->toEnd
-      ),
-      new SequentialCommandGroup(
-        new ResetEncoders(shoulder, elbow),
-        shoulder.moveTo(2.0),
-        new WaitCommand(1),
-        shoulder.moveTo(3),
-        new WaitCommand(0.75),
-        shoulder.moveTo(4),
-        new WaitCommand(0.75),
-        shoulder.moveTo(5.5),
-        new WaitCommand(0.5),
-        shoulder.moveTo(6.5),
 
+          claw.runPID();
+        }
+        ),
+        new SequentialCommandGroup(
+          //shoulder up
+          new ResetEncoders(shoulder, elbow),
+          shoulder.moveTo(2.0),
+          new WaitCommand(1),
 
-        //safe code
+          //grab with claw
+          new MoveHand(claw, MoveHand.position.closed),
+          new WaitCommand(0.5),
+          
+          //swing elbow out
+          elbow.moveTo(-36),
+          new WaitCommand(0.5),
+          
+          //release game piece
+          new MoveHand(claw, MoveHand.position.open),
+          new WaitCommand(0.5),
+          
+          //elbow Back in
+          elbow.moveTo(0),
+          new WaitCommand(0.5),
+          
+          //shoulder up
+          shoulder.moveTo(4.0),
+          new WaitCommand(0.5),
+          
+          //elbow out
+          elbow.moveTo(-32),
+          new WaitCommand(0.5),
+          
+          //shoulder  and elbow more up
+          elbow.moveTo(-46),
+          shoulder.moveTo(6.0),
+          new WaitCommand(0.5),
 
-        new InstantCommand(()->runShoulder = false),
-        new ResetEncoders(shoulder, elbow),
-        new InstantCommand(()->runElbow = true),
-        
-        new WaitCommand(0.5),
+          //disengage shoulder
+          new InstantCommand(()->runShoulder = false),
 
-        elbow.moveTo(-10),
-        new WaitCommand(1.5),
+          // flick elbow all the way down
+          elbow.moveTo(60),
+          new WaitCommand(1),
+          elbow.moveTo(80),
+          new WaitCommand(1),
 
-        elbow.moveTo(-20),
-        new WaitCommand(1.5),
-        elbow.moveTo(-40),
-        new WaitCommand(1.5),
-        
+          //calm down. everythings fine
 
-        elbow.moveTo(-60),
-        new WaitCommand(1.5),
-        
-        new InstantCommand(()->runElbow = false)
-
+          //reset encoders
+          new ResetEncoders(shoulder, elbow)
         )
       )
-       
     );
-    System.out.println("construvtor");
   }
 }
