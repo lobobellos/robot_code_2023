@@ -49,24 +49,24 @@ public class UnloadArm extends SequentialCommandGroup {
         new SequentialCommandGroup(
           //shoulder up
           new ResetEncoders(shoulder, elbow),
-          shoulder.moveTo(2.0),
+          shoulder.moveTo(1.0),
           new WaitCommand(1),
 
           //grab with claw
           new MoveHand(claw, MoveHand.position.closed),
-          new WaitCommand(0.5),
+          new WaitCommand(1),
           
           //swing elbow out
           elbow.moveTo(-36),
-          new WaitCommand(0.5),
+          new WaitCommand(1.5),
           
           //release game piece
           new MoveHand(claw, MoveHand.position.open),
-          new WaitCommand(0.5),
+          new WaitCommand(1.5),
           
           //elbow Back in
           elbow.moveTo(0),
-          new WaitCommand(0.5),
+          new WaitCommand(1.5),
           
           //shoulder up
           shoulder.moveTo(4.0),
@@ -85,9 +85,9 @@ public class UnloadArm extends SequentialCommandGroup {
           new InstantCommand(()->runShoulder = false),
 
           // flick elbow all the way down
-          elbow.moveTo(60),
+          elbow.moveTo(-60),
           new WaitCommand(1),
-          elbow.moveTo(80),
+          elbow.moveTo(-90),
           new WaitCommand(1),
 
           //calm down. everythings fine
