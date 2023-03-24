@@ -49,7 +49,7 @@ public class DriveBase extends SubsystemBase{
 
     //x^3 + 0.2x
     double res = MathUtil.clamp(
-      Math.pow(in,3)+(0.2*in),
+      Math.pow(in,3),
       -1,
       1
     );
