@@ -44,10 +44,7 @@ public class Elbow extends SubsystemBase{
     );
   }
 
-  public Runnable runPID = ()->{
-    controller.setReference(getSetPoint(), ControlType.kPosition);
-    //victorMotor.set(NEOmotor.getAppliedOutput());
-  };
+  public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
 
   public Runnable release = ()->controller.setReference(0, ControlType.kVoltage);
 
@@ -86,7 +83,12 @@ public class Elbow extends SubsystemBase{
 
   public InstantCommand moveTo(double setpoint){
     return new InstantCommand(
-      ()->setSetPoint(setpoint)
+      ()->this.setpoint = setpoint
+    );
+  }
+  public InstantCommand move(double toAdd){
+    return new InstantCommand(
+      ()->this.setpoint+= toAdd
     );
   }
 

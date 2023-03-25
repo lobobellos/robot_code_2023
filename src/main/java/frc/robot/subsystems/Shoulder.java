@@ -93,6 +93,11 @@ public class Shoulder extends SubsystemBase{
       ()->this.setpoint = setpoint
     );
   }
+  public InstantCommand move(double setpoint){
+    return new InstantCommand(
+      ()->this.setpoint += setpoint
+    );
+  }
 
   public InstantCommand setEnabled(boolean enabled){
     return new InstantCommand(
