@@ -7,7 +7,6 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
@@ -46,13 +45,7 @@ public class Shoulder extends SubsystemBase{
       Const.shoulder.pidff.maxOutput
     );
 
-    setDefaultCommand(new RunCommand(
-        ()->{
-          controller.setReference(getSetPoint(), ControlType.kPosition);
-        },
-        this
-      )
-    );
+
   }
 
   public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
@@ -93,10 +86,8 @@ public class Shoulder extends SubsystemBase{
       ()->this.setpoint = setpoint
     );
   }
-  public InstantCommand move(double setpoint){
-    return new InstantCommand(
-      ()->this.setpoint += setpoint
-    );
+  public Runnable move(double setpoint){
+    return ()->this.setpoint += setpoint;
   }
 
   public InstantCommand setEnabled(boolean enabled){

@@ -7,7 +7,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
@@ -37,11 +36,8 @@ public class Elbow extends SubsystemBase{
 
     NEOmotor.setIdleMode(IdleMode.kCoast);
 
-    setDefaultCommand(new RunCommand(
-        runPID,
-        this
-      )
-    );
+    
+    
   }
 
   public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
@@ -86,10 +82,8 @@ public class Elbow extends SubsystemBase{
       ()->this.setpoint = setpoint
     );
   }
-  public InstantCommand move(double toAdd){
-    return new InstantCommand(
-      ()->this.setpoint+= toAdd
-    );
+  public Runnable move(double toAdd){
+    return ()->this.setpoint+= toAdd;
   }
 
 
