@@ -5,7 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.auto.AutoSelector;
 
@@ -50,14 +50,33 @@ private final DriveBase db = new DriveBase();
         db
       )
     );
+
+
+    elbow.setDefaultCommand(
+      new RunCommand(
+        ()->{
+          elbow.runPID.run();
+          elbow.move(-armController.getRightY()/3).run();
+          SmartDashboard.putNumber("joysitck left",armController.getLeftY());
+          SmartDashboard.putNumber("joysitck right",armController.getRightY());
+        },
+        elbow
+      )
+    );
+
+    shoulder.setDefaultCommand(
+      new RunCommand(
+        ()->{
+          shoulder.runPID.run();
+          shoulder.move(armController.getLeftY()/30).run();
+        }, 
+        shoulder
+      )
+    );
     
     // Configure the button bindings
     configureButtonBindings();
   }
-
-  /*
-   * 
-   */
 
   private void configureButtonBindings() {
 
