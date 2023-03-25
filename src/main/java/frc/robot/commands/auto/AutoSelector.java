@@ -15,7 +15,8 @@ public class AutoSelector extends CommandBase {
   public static enum AutoType{
     longer,
     shorter,
-    center
+    center,
+    noDrive
   }
 
   final SendableChooser<AutoType> autoChooser= new SendableChooser<AutoType>();
@@ -39,6 +40,7 @@ public class AutoSelector extends CommandBase {
     autoChooser.addOption("short", AutoType.shorter);
     autoChooser.addOption("center", AutoType.center);
     autoChooser.addOption("long", AutoType.longer);
+    autoChooser.addOption("noDrive", AutoType.noDrive);
     SmartDashboard.putData("Auto choices", autoChooser);
 
   }
@@ -73,6 +75,12 @@ public class AutoSelector extends CommandBase {
           new DriveForwards(db,80)
         )
       ); 
-    }    
+    }else if(name ==AutoType.noDrive){
+      scheduler.schedule(
+        new SequentialCommandGroup(
+          new UnloadArm(shoulder, elbow, claw, db)
+        )
+      ); 
+    }  
   }
 }
