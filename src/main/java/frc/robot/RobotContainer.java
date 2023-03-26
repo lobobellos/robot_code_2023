@@ -56,7 +56,7 @@ private final DriveBase db = new DriveBase();
       new RunCommand(
         ()->{
           elbow.runPID.run();
-          elbow.move(-armController.getRightY()/3).run();
+          elbow.move(-armController.getRightY()/3*(1+armController.getRightTriggerAxis())).run();
           SmartDashboard.putNumber("joysitck left",armController.getLeftY());
           SmartDashboard.putNumber("joysitck right",armController.getRightY());
         },
@@ -68,7 +68,7 @@ private final DriveBase db = new DriveBase();
       new RunCommand(
         ()->{
           shoulder.runPID.run();
-          shoulder.move(armController.getLeftY()/30).run();
+          shoulder.move(armController.getLeftY()/30*(1+armController.getLeftTriggerAxis())).run();
         }, 
         shoulder
       )

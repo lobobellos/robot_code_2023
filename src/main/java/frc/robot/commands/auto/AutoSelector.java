@@ -56,29 +56,29 @@ public class AutoSelector extends CommandBase {
     if(name == AutoType.longer){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw,db),
-          new DriveForwards(db,120)
+          new ScoreHigh(shoulder, elbow, claw, db),
+          new DriveForwards(db,-120)
         )
       );
     }else if(name == AutoType.center){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw, db),
-          new DriveForwards(db,60),
+          new ScoreHigh(shoulder, elbow, claw, db),
+          new DriveForwards(db,-60),
           foot.setSolenoid(DoubleSolenoid.Value.kReverse)
         )
       );
     }else if(name ==AutoType.shorter){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw, db),
-          new DriveForwards(db,80)
+          new ScoreHigh(shoulder, elbow, claw, db),
+          new DriveForwards(db,-80)
         )
       ); 
     }else if(name ==AutoType.noDrive){
       scheduler.schedule(
         new SequentialCommandGroup(
-          new UnloadArm(shoulder, elbow, claw, db)
+          new ScoreHigh(shoulder, elbow, claw, db)
         )
       ); 
     }  

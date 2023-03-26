@@ -15,8 +15,8 @@ import frc.robot.subsystems.Shoulder;
 
 public class ScoreHigh extends SequentialCommandGroup {
 
-  static boolean runShoulder = true;
-  static boolean runElbow = false;
+  static boolean runShoulder;
+  static boolean runElbow;
 
   static boolean toEnd = false;
 
@@ -25,7 +25,7 @@ public class ScoreHigh extends SequentialCommandGroup {
       new InstantCommand(
         ()->{
           runShoulder = true;
-          runElbow = false;
+          runElbow = true;
           toEnd = false;
         }
       ),
@@ -44,40 +44,68 @@ public class ScoreHigh extends SequentialCommandGroup {
           }
 
           claw.runPID();
-          db.drive(0, 0, 0, false);
+          //db.drive(0, 0, 0, false);
         }
         ),
         new SequentialCommandGroup(
           //shoulder up
           new ResetEncoders(shoulder, elbow),
+
+          new InstantCommand(()->runElbow = false),
+
           shoulder.moveTo(1.0),
-          new WaitCommand(1),
+          new WaitCommand(1.5),
 
           //grab with claw
           new MoveHand(claw, MoveHand.position.closed),
-          new WaitCommand(1),
+          new WaitCommand(1.5),
           
-          
+          shoulder.moveTo(2.0),
+          new WaitCommand(0.5),
+
+          shoulder.moveTo(3.0),
+          new WaitCommand(0.5),
+
           //shoulder up
           shoulder.moveTo(4.0),
           new WaitCommand(0.5),
           
-          //elbow out
-          elbow.moveTo(-32),
+          //shoulder up
+          shoulder.moveTo(5.0),
           new WaitCommand(0.5),
-          
+          shoulder.moveTo(6.0),
+          new WaitCommand(0.5),
+          shoulder.moveTo(7.0),
+          new WaitCommand(0.5),
+
+          new InstantCommand(()->runElbow = true),
           //shoulder and elbow more up
-          elbow.moveTo(-46),
+
+          elbow.moveTo(-30),
+          new WaitCommand(1.0),
+
+          elbow.moveTo(-40),
+          new WaitCommand(1.0),
+
+          new WaitCommand(1.0),
+          elbow.moveTo(-50),
+
+          elbow.moveTo(-60),
+          new WaitCommand(1.0),
+
           shoulder.moveTo(6.0),
           new WaitCommand(0.5),
 
-          // flick elbow to sideways
-          elbow.moveTo(-60),
-          new WaitCommand(1),
+          elbow.moveTo(-70),
+          shoulder.moveTo(5.5),
+          new WaitCommand(1.0),
+
           
-          //release cube
+          //release game piece
           new MoveHand(claw, MoveHand.position.open),
-          new WaitCommand(1) ,
+          new WaitCommand(1.5),
+
+          
 
           //elbow back
           elbow.moveTo(-46),
@@ -89,14 +117,24 @@ public class ScoreHigh extends SequentialCommandGroup {
           shoulder.moveTo(4.0),
           new WaitCommand(0.5),
 
+          
 
           //elbow back to neutral
           elbow.moveTo(0),
+          shoulder.moveTo(1),
           new WaitCommand(0.5),
 
-          new ReleaseAndZero(shoulder, elbow)
+          new InstantCommand(
+            ()->{
+              runShoulder = false;
+              runElbow = false;
+            }
+          ),
+
+          new WaitCommand(1)
         )
-      )
+      ),
+      new ReleaseAndZero(shoulder, elbow)
     );
   }
 }
