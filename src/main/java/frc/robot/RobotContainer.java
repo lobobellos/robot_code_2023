@@ -135,6 +135,6 @@ private final DriveBase db = new DriveBase();
   }
 
   public Command getAutonomousCommand() {
-    return selector;
+    return selector.getSelectedCommand();
   }
 }
