@@ -5,6 +5,7 @@
       "/LiveWindow/Claw/clawMotor": "Motor Controller",
       "/LiveWindow/Claw/pidController": "PIDController",
       "/LiveWindow/DriveBase/driveBase": "MecanumDrive",
+      "/LiveWindow/Elbow/motor": "Motor Controller",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Auto choices": "String Chooser",
