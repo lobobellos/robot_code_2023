@@ -1,0 +1,46 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Claw/clawMotor": "Motor Controller",
+      "/LiveWindow/Claw/pidController": "PIDController",
+      "/LiveWindow/DriveBase/driveBase": "MecanumDrive",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Auto choices": "String Chooser",
+      "/SmartDashboard/Claw": "Subsystem",
+      "/SmartDashboard/Elbow": "Subsystem",
+      "/SmartDashboard/Pneumatics": "Subsystem",
+      "/SmartDashboard/drivebase": "Subsystem",
+      "/SmartDashboard/shoulder": "Subsystem"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "LiveWindow": {
+        "DriveBase": {
+          "driveBase": {
+            "open": true
+          },
+          "drivebase": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Claw": {
+          "open": true
+        },
+        "Pneumatics": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  }
+}
