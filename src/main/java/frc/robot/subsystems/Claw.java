@@ -36,6 +36,7 @@ public class Claw extends SubsystemBase{
     ));
     addChild("pidController", controller);
     addChild("clawMotor",clawMotor);
+    addChild("claw encoder", encoder);
   }
 
   public void periodic(){

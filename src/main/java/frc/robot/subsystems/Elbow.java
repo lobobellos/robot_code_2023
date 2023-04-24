@@ -9,14 +9,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
-
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
   //sparkmax stuff
-  CANSparkMax NEOmotor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
-  RelativeEncoder encoder = NEOmotor.getEncoder();
-  SparkMaxPIDController controller = NEOmotor.getPIDController();
+  CANSparkMax motor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
+  RelativeEncoder encoder = motor.getEncoder();
+  SparkMaxPIDController controller = motor.getPIDController();
   //for pid control
   double setpoint = 0;
   
@@ -34,10 +34,9 @@ public class Elbow extends SubsystemBase{
       Const.elbow.pidff.maxOutput
     );
 
-    NEOmotor.setIdleMode(IdleMode.kCoast);
-
-    
-    
+    motor.setIdleMode(IdleMode.kCoast);
+    addChild("motor", new MotorControllerGroup(motor));
+    setName("Elbow");
   }
 
   public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
@@ -60,7 +59,7 @@ public class Elbow extends SubsystemBase{
     //put values on smartDashboard
     SmartDashboard.putNumber("Elbow encoder ", encoder.getPosition());
     SmartDashboard.putNumber("Elbow setpoint ", getSetPoint());
-    SmartDashboard.putNumber("elbow applied output",NEOmotor.getAppliedOutput());
+    SmartDashboard.putNumber("elbow applied output",motor.getAppliedOutput());
 
     SmartDashboard.putNumberArray("elbow position",new double[]{encoder.getPosition()});
   }
@@ -85,7 +84,5 @@ public class Elbow extends SubsystemBase{
   public Runnable move(double toAdd){
     return ()->this.setpoint+= toAdd;
   }
-
-
 
 }

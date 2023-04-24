@@ -45,6 +45,7 @@ public class Shoulder extends SubsystemBase{
       Const.shoulder.pidff.maxOutput
     );
 
+    setName("shoulder");
 
   }
 

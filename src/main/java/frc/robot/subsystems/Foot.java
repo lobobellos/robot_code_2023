@@ -2,14 +2,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
 
 public class Foot extends SubsystemBase{
 
-  PneumaticsControlModule pcm = new PneumaticsControlModule(Const.pneumatics.PCMID);
+  PneumaticsControlModule pcm;
   
   DoubleSolenoid mainSolenoid;
 
@@ -22,6 +21,9 @@ public class Foot extends SubsystemBase{
     );
 
     mainSolenoid.set(DoubleSolenoid.Value.kForward);
+
+    addChild("mainSolenoid", mainSolenoid);
+    setName("Foot");
   }
 
 
@@ -40,9 +42,4 @@ public class Foot extends SubsystemBase{
   public String getStatus(){
     return mainSolenoid.get().name();
   }
-
-  public void periodic(){
-    SmartDashboard.putString("pneumatics",getStatus());
-  }
-
 }

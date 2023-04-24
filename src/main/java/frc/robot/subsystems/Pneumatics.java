@@ -9,12 +9,14 @@ import frc.robot.Const;
 public class Pneumatics extends SubsystemBase{
 
   PneumaticsControlModule pcm = new PneumaticsControlModule(Const.pneumatics.PCMID);
-  
   Compressor comp;
 
   public Pneumatics(){
     comp = pcm.makeCompressor();
     comp.enableDigital();
+
+    addChild("compressor", comp);
+    setName("Pneumatics");
   }
 
   public void enable(){
@@ -40,5 +42,4 @@ public class Pneumatics extends SubsystemBase{
   public PneumaticsControlModule getPCM(){
     return pcm;
   }
-
 }

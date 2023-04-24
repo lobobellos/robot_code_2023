@@ -36,6 +36,7 @@ private final DriveBase db = new DriveBase();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // configure the camera server
     CameraServer.startAutomaticCapture();
 
 
@@ -76,6 +77,14 @@ private final DriveBase db = new DriveBase();
     
     // Configure the button bindings
     configureButtonBindings();
+
+    
+    SmartDashboard.putData(shoulder);
+    SmartDashboard.putData(claw);
+    SmartDashboard.putData(db);
+    SmartDashboard.putData(pneumatics);
+    SmartDashboard.putData(elbow);
+
   }
 
   private void configureButtonBindings() {

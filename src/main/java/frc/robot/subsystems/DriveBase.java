@@ -43,6 +43,7 @@ public class DriveBase extends SubsystemBase{
     driveBase = new MecanumDrive(fl,rl,fr,rr);
 
     addChild("driveBase",driveBase);
+    setName("drivebase");
   }
 
   double michaelRule(double in){
