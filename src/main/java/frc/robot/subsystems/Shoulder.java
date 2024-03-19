@@ -2,9 +2,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,7 +23,7 @@ public class Shoulder extends SubsystemBase{
 
   //encoder
   RelativeEncoder encoder = shoulder.getEncoder();
-  SparkMaxPIDController controller = shoulder.getPIDController();
+  SparkPIDController controller = shoulder.getPIDController();
 
   double setpoint = 0;
 

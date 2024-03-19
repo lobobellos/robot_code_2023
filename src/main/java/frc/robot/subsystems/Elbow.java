@@ -1,22 +1,22 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Const;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elbow extends SubsystemBase{
   //sparkmax stuff
   CANSparkMax motor = new CANSparkMax(Const.elbow.motorID, MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
-  SparkMaxPIDController controller = motor.getPIDController();
+  SparkPIDController controller = motor.getPIDController();
   //for pid control
   double setpoint = 0;
   
@@ -35,11 +35,10 @@ public class Elbow extends SubsystemBase{
     );
 
     motor.setIdleMode(IdleMode.kCoast);
-    addChild("motor", new MotorControllerGroup(motor));
     setName("Elbow");
   }
 
-  public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition);
+  public Runnable runPID = ()->controller.setReference(getSetPoint(), ControlType.kPosition,0);
 
   public Runnable release = ()->controller.setReference(0, ControlType.kVoltage);
 

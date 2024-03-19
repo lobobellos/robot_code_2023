@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Encoder;
@@ -11,6 +12,7 @@ import frc.robot.Const;
 
 public class Claw extends SubsystemBase{
   WPI_VictorSPX clawMotor = new WPI_VictorSPX(Const.claw.ID);
+
 
   Encoder encoder = new Encoder(0, 1,true);
 

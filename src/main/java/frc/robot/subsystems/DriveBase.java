@@ -3,8 +3,7 @@ import frc.robot.Const;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -61,16 +60,16 @@ public class DriveBase extends SubsystemBase{
   public void drive(double x,double y, double z,boolean applyMichaelRule){
     if(withGyro){
       driveBase.driveCartesian(
-        applyMichaelRule ? michaelRule(-x) : -x,
-        applyMichaelRule ? michaelRule(y): y,
-        (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity,
+         -x,
+         y,
+        z*Const.drive.rotateSensitivity,
         getAngleZ()
       );
     }else{
       driveBase.driveCartesian(
-        applyMichaelRule ? michaelRule(-x) : -x,
-        applyMichaelRule ? michaelRule(y): y,
-        (applyMichaelRule ? michaelRule(z):z)*Const.drive.rotateSensitivity
+        -x,
+         y,
+        z*Const.drive.rotateSensitivity
       );
 
     }
