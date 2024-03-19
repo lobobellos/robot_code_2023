@@ -32,7 +32,7 @@ public class DriveBase extends SubsystemBase{
 
   ADIS16448_IMU gyro = new ADIS16448_IMU();
 
-  boolean withGyro = false;
+  boolean withGyro = true;
   
   public DriveBase(){
 
