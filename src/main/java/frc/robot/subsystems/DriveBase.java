@@ -45,19 +45,16 @@ public class DriveBase extends SubsystemBase{
     setName("drivebase");
   }
 
-  double michaelRule(double in){
 
-    //x^3 + 0.2x
-    double res = MathUtil.clamp(
-      Math.pow(in,3),
-      -1,
-      1
-    );
-
-    return res;
-  }
 
   public void drive(double x,double y, double z,boolean applyMichaelRule){
+    
+    x = MathUtil.applyDeadband(x, 0.05);
+    y = MathUtil.applyDeadband(y, 0.05);
+    z = MathUtil.applyDeadband(z, 0.05);
+
+    
+    
     if(withGyro){
       driveBase.driveCartesian(
          -x,
